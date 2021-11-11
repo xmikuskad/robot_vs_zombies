@@ -10,10 +10,11 @@ public abstract class PlayerFollower : MonoBehaviour
     [SerializeField]
     private float platformCheckRange = 0.2f;
     [SerializeField]
-    private GameObject platformChecker;
+    private bool isJumping = false;
 
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
     private Transform player;
+    private GroundChecker platformChecker;
 
     public void Start()
     {
@@ -23,9 +24,19 @@ public abstract class PlayerFollower : MonoBehaviour
 
     public void FollowPlayer()
     {
+        if(isJumping)
+        {
+            return;
+        }
+
         Vector3 playerPos = player.position;
         playerPos.y = transform.position.y;
         Vector3 dir = (playerPos - transform.position).normalized;
         rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
+    }
+
+    public void SetIsJumping(bool value)
+    {
+        isJumping = value;
     }
 }
