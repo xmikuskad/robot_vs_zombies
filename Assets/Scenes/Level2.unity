@@ -1110,6 +1110,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5349622003449932433, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5349622003449932435, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1155,12 +1159,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5349622003449932446, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
+      propertyPath: dynamite
+      value: 
+      objectReference: {fileID: 4300770987309840910, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
+    - target: {fileID: 5349622003449932446, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
       propertyPath: jumpForce
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5349622003449932447, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
       propertyPath: m_Name
       value: PlayerDebugger
+      objectReference: {fileID: 0}
+    - target: {fileID: 5349622003449932447, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
@@ -1175,9 +1187,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.079
       objectReference: {fileID: 0}
+    - target: {fileID: 2163995815456610506, guid: 4efa29a167b58d643996b7b385f1c59c, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7980296869329059029, guid: 4efa29a167b58d643996b7b385f1c59c, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980296869329059029, guid: 4efa29a167b58d643996b7b385f1c59c, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980296869329059030, guid: 4efa29a167b58d643996b7b385f1c59c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7980296869329059032, guid: 4efa29a167b58d643996b7b385f1c59c, type: 3}
       propertyPath: m_RootOrder
@@ -1233,25 +1257,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1671902076188140557, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
-      propertyPath: blastForce
-      value: 6000
-      objectReference: {fileID: 0}
-    - target: {fileID: 1671902076188140557, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
-      propertyPath: blastRadius
-      value: 12.17
-      objectReference: {fileID: 0}
     - target: {fileID: 4300770987309840898, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4300770987309840898, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.21
+      value: -6.2
       objectReference: {fileID: 0}
     - target: {fileID: 4300770987309840898, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.06
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 4300770987309840898, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1288,10 +1304,6 @@ PrefabInstance:
     - target: {fileID: 4300770987309840910, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
       propertyPath: m_Name
       value: Dynamite
-      objectReference: {fileID: 0}
-    - target: {fileID: 4300770987309840910, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}

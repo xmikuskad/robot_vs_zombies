@@ -11,6 +11,9 @@ public class DebuggingPlayerMovement : MonoBehaviour
     private float jumpForce = 10f;
     private Rigidbody2D rb;
 
+    public float throwForce = 10f;
+    public GameObject dynamite;
+
     float xInput;
 
     void Start()
@@ -25,11 +28,28 @@ public class DebuggingPlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            ThrowDynamite();
+        }
     }
 
     void FixedUpdate()
     {
         rb.velocity = new Vector2(xInput * speed, rb.velocity.y);
 
+    }
+
+    void ThrowDynamite()
+    {
+        
+        
+        GameObject newDynamite = Instantiate(dynamite, transform.position, transform.rotation);
+        Rigidbody2D rb = newDynamite.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            
+        }
     }
 }
