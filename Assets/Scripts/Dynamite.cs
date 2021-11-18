@@ -6,7 +6,7 @@ public class Dynamite : MonoBehaviour
 {
     public float delay = 3f;
     public float blastRadius = 5f;
-    public float blastForce = 700f;
+    public float blastForce = 50f;
 
     private float countdown;
 
@@ -34,24 +34,38 @@ public class Dynamite : MonoBehaviour
     {
         hasExploded = true;
         // Show effect
-        if (transform != null)
+ 
+        Instantiate(explosionEffect, transform.position, transform.rotation);
+
+        var colliders = Physics2D.OverlapCircleAll(transform.position, blastRadius);
+
+        foreach (var nearbyObject in colliders)
         {
-            Instantiate(explosionEffect, transform.position, transform.rotation);
-
-            Collider[] colliders = Physics.OverlapSphere(transform.position, blastRadius);
-
-            foreach (Collider nearbyObject in colliders)
+            Rigidbody2D rb = nearbyObject.GetComponent<Rigidbody2D>();
+            if (rb != null)
             {
-                Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-                if (rb != null)
+                var explosionDir = rb.position - (Vector2) transform.position;
+                var explosionDistance = explosionDir.magnitude;
+                ForceMode2D mode = ForceMode2D.Force;
+                float upwardsModifier = 0.0f;
+                
+                if (upwardsModifier == 0)
+                    explosionDir /= explosionDistance;
+                else
                 {
-                    rb.AddExplosionForce(blastForce, transform.position, blastRadius);
+                    explosionDir.y += upwardsModifier;
+                    explosionDir.Normalize();
                 }
+                
+                rb.AddForce(Mathf.Lerp(0, blastForce, (1 - explosionDistance)) * explosionDir, mode);
+                
+                // rb.AddExplosionForce(blastForce, transform.position, blastRadius);
+                // rb.velocity = new Vector2(rb.velocity.x, blastForce);
             }
         }
-        
 
-        // Get nearby objects
+
+            // Get nearby objects
             // Add Force
             // Damage
 
