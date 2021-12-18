@@ -33,6 +33,8 @@ public class DebuggingPlayerMovement : MonoBehaviour
     public float dynamiteMagazineRechargeRate = 1.0f;
     // current recharge progression
     public float dynamiteMagazineRechargeTimer = 0.0f;
+    private GameObject[] visualMagazineDynamites;
+    public int maxVisualDynamites = 4;
 
     [FormerlySerializedAs("deltaExplosionTime")] public float deltaDetonationTime = 0.0f;
     [FormerlySerializedAs("minDeltaExplosionTime")] public float minDeltaDetonationTime = 0.5f;
@@ -42,6 +44,8 @@ public class DebuggingPlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        visualMagazineDynamites = new GameObject[Math.Max(maxDynamiteMagazineCount, maxVisualDynamites)];
+
     }
 
     private void Update()
@@ -70,6 +74,19 @@ public class DebuggingPlayerMovement : MonoBehaviour
             dynamiteMagazineCount = Math.Min(maxDynamiteMagazineCount, dynamiteMagazineCount + dynamiteRechargeCount);
             dynamiteMagazineRechargeTimer -= dynamiteMagazineRechargeRate;
         }
+    }
+
+    private void SpawnMagazineDynamites()
+    {
+        for (int i = 0; i < dynamiteMagazineCount; i++)
+        {
+            
+        }
+    }
+
+    private void SpawnSingleMagazineDynamite(int index)
+    {
+        
     }
 
     private void HandlePlayerDetonation()
