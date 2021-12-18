@@ -7,17 +7,30 @@ public class Dynamite : MonoBehaviour
 {
     public float delay = 3f;
     public float blastRadius = 5f;
-    public float blastForce = 50f;
-    public float upwardsModifier = 0.0f;
+    public float blastForce = 5f;
+    public float upwardsModifier = 0.1f;
 
     private float countdown;
 
     public GameObject explosionEffect;
-
     private bool hasExploded = false;
+
+    public float speed = 4f;
+
+    public Vector3 launchOffset;
+
+    public bool thrown;
+    
     // Start is called before the first frame update
     void Start()
     {
+        if (thrown)
+        {
+            var direction = -transform.right + Vector3.up;
+            GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
+        }
+        transform.Translate(launchOffset);
+        
         countdown = delay;
 
     }
@@ -36,36 +49,34 @@ public class Dynamite : MonoBehaviour
     {
         hasExploded = true;
         // Show effect
- 
-        Instantiate(explosionEffect, transform.position, transform.rotation);
 
-        var colliders = Physics2D.OverlapCircleAll(transform.position, blastRadius);
+        var localTransform = transform; // for performance purposes (IDE says its better, so i guess i'll believe it)
+        var rotation = localTransform.rotation;
+        var position = localTransform.position;
+        Instantiate(explosionEffect, position, rotation);
+
+        var colliders = Physics2D.OverlapCircleAll(position, blastRadius);
 
         foreach (var nearbyObject in colliders)
         {
-            Rigidbody2D rb = nearbyObject.GetComponent<Rigidbody2D>();
+            var rb = nearbyObject.GetComponent<Rigidbody2D>();
             if (rb == null) continue; // If object without rigidbody, skip to the next one
+
+            var explosionDir = rb.position - (Vector2) transform.position;
+            var explosionDistance = explosionDir.magnitude;
+            const ForceMode2D mode = ForceMode2D.Impulse;
+
+            if (upwardsModifier == 0)
+                explosionDir /= explosionDistance;
+            else
+            {
+                explosionDir.y += upwardsModifier;
+                explosionDir.Normalize();
+            }
+                
+            rb.AddForce(Mathf.Lerp(0, blastForce, (1 - explosionDistance)) * explosionDir, mode);
             
-            rb.AddExplosionForce(blastForce, transform.position, blastRadius, upwardsModifier, ForceMode2D.Impulse);
-
-
-            // var explosionDir = rb.position - (Vector2) transform.position;
-            // var explosionDistance = explosionDir.magnitude;
-            // ForceMode2D mode = ForceMode2D.Impulse;
-            // float upwardsModifier = 0.2f;
-            //     
-            // if (upwardsModifier == 0)
-            //     explosionDir /= explosionDistance;
-            // else
-            // {
-            //     explosionDir.y += upwardsModifier;
-            //     explosionDir.Normalize();
-            // }
-            //     
-            // rb.AddForce(Mathf.Lerp(0, blastForce, (1 - explosionDistance)) * explosionDir, mode);
-            //     
-            // rb.AddExplosionForce(blastForce, transform.position, blastRadius);
-            // rb.velocity = new Vector2(rb.velocity.x, blastForce);
+            rb.velocity = new Vector2(rb.velocity.x, blastForce);
         }
 
 
