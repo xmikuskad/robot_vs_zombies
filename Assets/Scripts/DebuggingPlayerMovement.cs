@@ -33,6 +33,9 @@ public class DebuggingPlayerMovement : MonoBehaviour
     // current recharge progression
     public float dynamiteMagazineRechargeTimer = 0.0f;
 
+    public float deltaExplosionTime = 0.0f;
+    public float minDeltaExplosionTime = 0.5f;
+
     float xInput;
 
     void Start()
@@ -70,6 +73,10 @@ public class DebuggingPlayerMovement : MonoBehaviour
 
     private void HandlePlayerDetonation()
     {
+        // Minimal time between detonations
+        deltaExplosionTime += Time.deltaTime;
+        if (deltaExplosionTime < minDeltaExplosionTime) return;
+        
         if (activeDynamite == null) return;
         
         activeDynamiteTimer += Time.deltaTime;
@@ -83,6 +90,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
         if (dynamiteScript != null)
         {
             dynamiteScript.Explode();
+            deltaExplosionTime = 0.0f;
         }
     }
 
@@ -91,7 +99,6 @@ public class DebuggingPlayerMovement : MonoBehaviour
         // rb.velocity = new Vector2(xInput * speed, rb.velocity.y);
     }
     
-
     void ThrowDynamite()
     {
         // If magazine is empty, do nothing

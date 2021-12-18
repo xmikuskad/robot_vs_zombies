@@ -126,7 +126,7 @@ MonoBehaviour:
   dynamiteRechargeCount: 1
   maxDynamiteMagazineCount: 4
   dynamiteMagazineCount: 2
-  dynamiteMagazineRechargeRate: 1.1
+  dynamiteMagazineRechargeRate: 0.9
   dynamiteMagazineRechargeTimer: 0
 --- !u!61 &5349622003449932434
 BoxCollider2D:
