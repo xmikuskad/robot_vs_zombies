@@ -76,6 +76,8 @@ public class DebuggingPlayerMovement : MonoBehaviour
         // Minimal time between detonations
         deltaExplosionTime += Time.deltaTime;
         if (deltaExplosionTime < minDeltaExplosionTime) return;
+        // To prevent potential overflow 
+        deltaExplosionTime = minDeltaExplosionTime;
         
         if (activeDynamite == null) return;
         
