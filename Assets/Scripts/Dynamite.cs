@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Extensions;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
+
 
 public class Dynamite : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class Dynamite : MonoBehaviour
     public float minimalExplosionDistance = 0.1f;
 
     private float countdown;
+    private Rigidbody2D rb;
 
     public GameObject explosionEffect;
     private bool hasExploded = false;
@@ -27,6 +30,7 @@ public class Dynamite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         if (thrown)
         {
             var mousePosition = Input.mousePosition;
@@ -34,7 +38,9 @@ public class Dynamite : MonoBehaviour
             if (Camera.main != null) mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
             var mouseDirection = mousePosition - gameObject.transform.position;
             mouseDirection.z = 0.0f;
-            GetComponent<Rigidbody2D>().AddForce(mouseDirection * initialThrowForce, ForceMode2D.Impulse);
+            rb.AddForce(mouseDirection * initialThrowForce, ForceMode2D.Impulse);
+            var impulse = ( Random.Range(-180f, 180f) * Mathf.Deg2Rad) * rb.inertia;
+            rb.AddTorque(impulse * initialThrowForce, ForceMode2D.Impulse);
         }
         transform.Translate(launchOffset);
         

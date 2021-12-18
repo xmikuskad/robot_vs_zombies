@@ -116,6 +116,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
         if (dynamiteRb != null)
         {
             dynamiteRb.velocity = rb.velocity;
+            dynamiteRb.rotation = rb.rotation;
         }
 
         activeDynamiteTimer = 0f;
