@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.XR;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class DebuggingPlayerMovement : MonoBehaviour
@@ -14,8 +15,11 @@ public class DebuggingPlayerMovement : MonoBehaviour
 
     public float throwForce = 10f;
     public GameObject dynamite;
+    
+    public float minExplodeTime = .0f;
 
-    private GameObject[] activeDynamites;
+    private GameObject activeDynamite = null;
+    private float activeDynamiteTimer = 0f;
 
     float xInput;
 
@@ -36,6 +40,28 @@ public class DebuggingPlayerMovement : MonoBehaviour
         {
             ThrowDynamite();
         }
+
+        HandlePlayerDetonation();
+    }
+
+    void HandlePlayerDetonation()
+    {
+        if (activeDynamite != null)
+        {
+            activeDynamiteTimer += Time.deltaTime;
+            
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
+                if (activeDynamiteTimer >= minExplodeTime)
+                {
+                    Dynamite dynamite = activeDynamite.GetComponent<Dynamite>();
+                    if (dynamite != null)
+                    {
+                        dynamite.Explode();
+                    }
+                }
+            }
+        }
     }
 
     void FixedUpdate()
@@ -46,12 +72,14 @@ public class DebuggingPlayerMovement : MonoBehaviour
     void ThrowDynamite()
     {
         
-        
         GameObject newDynamite = Instantiate(dynamite, transform.position, transform.rotation);
         Rigidbody2D rb = newDynamite.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             
         }
+
+        activeDynamiteTimer = 0f;
+        activeDynamite = newDynamite;
     }
 }

@@ -10,6 +10,7 @@ public class Dynamite : MonoBehaviour
     public float blastRadius = 5f;
     public float blastForce = 5f;
     public float upwardsModifier = 0.1f;
+    public float minimalExplosionDistance = 0.1f;
 
     private float countdown;
 
@@ -52,7 +53,8 @@ public class Dynamite : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, blastRadius);
     }
 
-    void Explode()
+    // Method is public so that player can call it on command
+    public void Explode()
     {
         hasExploded = true;
         // Show effect
@@ -69,12 +71,15 @@ public class Dynamite : MonoBehaviour
     
         foreach (var nearbyObject in colliders)
         {
-            // Add Force
+            
+            // Add Calculated Force
             var rb = nearbyObject.GetComponent<Rigidbody2D>();
             if (rb == null) continue; // If object without rigidbody, skip to the next one
     
             var explosionDir = rb.position - (Vector2) transform.position;
-            var explosionDistance = explosionDir.magnitude;
+            
+            // In case dynamite is inside the object
+            var explosionDistance = Mathf.Max(explosionDir.magnitude, minimalExplosionDistance);
             const ForceMode2D mode = ForceMode2D.Impulse;
     
             if (upwardsModifier <= 0.01f)
