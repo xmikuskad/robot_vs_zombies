@@ -35,6 +35,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
     public float dynamiteMagazineRechargeTimer = 0.0f;
     private GameObject[] visualMagazineDynamites;
     public int maxVisualDynamites = 4;
+    public GameObject visualDynamite;
 
     [FormerlySerializedAs("deltaExplosionTime")] public float deltaDetonationTime = 0.0f;
     [FormerlySerializedAs("minDeltaExplosionTime")] public float minDeltaDetonationTime = 0.5f;
@@ -80,13 +81,15 @@ public class DebuggingPlayerMovement : MonoBehaviour
     {
         for (int i = 0; i < dynamiteMagazineCount; i++)
         {
-            
+            SpawnSingleMagazineDynamite(i);
         }
     }
 
     private void SpawnSingleMagazineDynamite(int index)
     {
-        
+        if (index > maxVisualDynamites) return;
+
+        visualMagazineDynamites[index] = Instantiate(visualDynamite, transform.position, transform.rotation);
     }
 
     private void HandlePlayerDetonation()
