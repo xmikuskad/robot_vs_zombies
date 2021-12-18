@@ -1,23 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Extensions;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
+
 
 public class Dynamite : MonoBehaviour
 {
     public float delay = 3f;
     public float blastRadius = 5f;
-    public float blastForce = 50f;
-    public float upwardsModifier = 0.0f;
+    public float blastForce = 5f;
+    public float upwardsModifier = 0.1f;
+    public float minimalExplosionDistance = 0.1f;
 
     private float countdown;
+    private Rigidbody2D rb;
 
     public GameObject explosionEffect;
-
     private bool hasExploded = false;
+
+    [FormerlySerializedAs("speed")] public float initialThrowForce = 4f;
+
+    public Vector3 launchOffset;
+
+    public bool thrown = false;
+    
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+        if (thrown)
+        {
+            var mousePosition = Input.mousePosition;
+            mousePosition.z = 10.0f;
+            if (Camera.main != null) mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            var mouseDirection = mousePosition - gameObject.transform.position;
+            mouseDirection.z = 0.0f;
+            rb.AddForce(mouseDirection * initialThrowForce, ForceMode2D.Impulse);
+            var impulse = ( Random.Range(-180f, 180f) * Mathf.Deg2Rad) * rb.inertia;
+            rb.AddTorque(impulse * initialThrowForce, ForceMode2D.Impulse);
+        }
+        transform.Translate(launchOffset);
+        
         countdown = delay;
 
     }
@@ -32,47 +58,58 @@ public class Dynamite : MonoBehaviour
         }
     }
 
-    void Explode()
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, blastRadius);
+    }
+
+    // Method is public so that player can call it on command
+    // Partially inspired by https://stackoverflow.com/a/66453571
+    public void Explode()
     {
         hasExploded = true;
         // Show effect
- 
-        Instantiate(explosionEffect, transform.position, transform.rotation);
-
-        var colliders = Physics2D.OverlapCircleAll(transform.position, blastRadius);
-
+    
+        var localTransform = transform; // for performance purposes (IDE says its better, so i guess i'll believe it)
+        var rotation = localTransform.rotation;
+        var position = localTransform.position;
+        
+        // Create visual explosion
+        Instantiate(explosionEffect, position, rotation);
+    
+        // Get nearby objects
+        var colliders = Physics2D.OverlapCircleAll(position, blastRadius);
+    
         foreach (var nearbyObject in colliders)
         {
-            Rigidbody2D rb = nearbyObject.GetComponent<Rigidbody2D>();
-            if (rb == null) continue; // If object without rigidbody, skip to the next one
             
-            rb.AddExplosionForce(blastForce, transform.position, blastRadius, upwardsModifier, ForceMode2D.Impulse);
-
-
-            // var explosionDir = rb.position - (Vector2) transform.position;
+            // Add Calculated Force
+            var rb = nearbyObject.GetComponent<Rigidbody2D>();
+            if (rb == null) continue; // If object without rigidbody, skip to the next one
+    
+            var explosionDir = rb.position - (Vector2) transform.position;
+            
+            // In case dynamite is inside the object
+            var explosionDistance = Mathf.Max(explosionDir.magnitude, minimalExplosionDistance);
+            explosionDistance /= 8; // for better reach
+            
             // var explosionDistance = explosionDir.magnitude;
-            // ForceMode2D mode = ForceMode2D.Impulse;
-            // float upwardsModifier = 0.2f;
-            //     
-            // if (upwardsModifier == 0)
-            //     explosionDir /= explosionDistance;
-            // else
-            // {
-            //     explosionDir.y += upwardsModifier;
-            //     explosionDir.Normalize();
-            // }
-            //     
-            // rb.AddForce(Mathf.Lerp(0, blastForce, (1 - explosionDistance)) * explosionDir, mode);
-            //     
-            // rb.AddExplosionForce(blastForce, transform.position, blastRadius);
-            // rb.velocity = new Vector2(rb.velocity.x, blastForce);
-        }
+            const ForceMode2D mode = ForceMode2D.Impulse;
 
-
-            // Get nearby objects
-            // Add Force
+            if (upwardsModifier <= 0.01f)
+                explosionDir /= explosionDistance;
+            else
+            {
+                explosionDir.y += upwardsModifier;
+                explosionDir.Normalize();
+            }
+            
+            rb.AddForce(Mathf.Lerp(0, blastForce, (1 - explosionDistance)) * explosionDir, mode);
+       
             // Damage
-
+        }
+    
         //Remove dynamite
         Destroy(gameObject);
     }
