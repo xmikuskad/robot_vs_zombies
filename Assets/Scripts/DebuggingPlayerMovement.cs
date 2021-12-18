@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -13,6 +14,8 @@ public class DebuggingPlayerMovement : MonoBehaviour
 
     public float throwForce = 10f;
     public GameObject dynamite;
+
+    private GameObject[] activeDynamites;
 
     float xInput;
 
@@ -37,8 +40,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(xInput * speed, rb.velocity.y);
-
+        // rb.velocity = new Vector2(xInput * speed, rb.velocity.y);
     }
 
     void ThrowDynamite()

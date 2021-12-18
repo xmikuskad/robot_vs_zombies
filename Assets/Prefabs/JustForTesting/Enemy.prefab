@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5400925206731946071}
   - component: {fileID: 5265521007951855140}
   - component: {fileID: 3279641784550201707}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 7980296869329059030}
   - component: {fileID: 7980296869329059031}
   - component: {fileID: 7980296869329059028}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   platformCheckRange: 0.2
+  isJumping: 0
   health: 0
   damage: 0
   forcePower: 10
