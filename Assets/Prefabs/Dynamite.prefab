@@ -141,15 +141,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4300770987309840910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06263c59f7af5624e93bee53e551ccb7, type: 3}
+  m_Script: {fileID: 11500000, guid: 31dc117711fe6e547ba897a5d3d5a34b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 3
-  blastRadius: 5
-  blastForce: 5
-  upwardsModifier: 0.1
-  minimalExplosionDistance: 0.1
-  explosionEffect: {fileID: 3864045702578427264, guid: 33c2e7b7fa8b8544fb08cf803013a5bc, type: 3}
-  initialThrowForce: 4
-  launchOffset: {x: 0, y: 0, z: 0}
-  thrown: 0
+  blastRadius: 4
+  blastForce: 9
+  upwardsModifier: 0.15
+  minimalExplosionDistance: 0.74
+  explosionEffect: {fileID: 3864045702578427264, guid: edf47ad95c28c814b9afbb2f8dcf6972, type: 3}
+  initialThrowForce: 2
+  launchOffset: {x: 0, y: -0.8, z: 0}
+  thrown: 1
