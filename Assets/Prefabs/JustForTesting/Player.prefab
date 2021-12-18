@@ -122,6 +122,12 @@ MonoBehaviour:
   jumpForce: 10
   throwForce: 10
   dynamite: {fileID: 4300770987309840910, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
+  minExplodeTime: 0.15
+  dynamiteRechargeCount: 1
+  maxDynamiteMagazineCount: 4
+  dynamiteMagazineCount: 2
+  dynamiteMagazineRechargeRate: 1.1
+  dynamiteMagazineRechargeTimer: 0
 --- !u!61 &5349622003449932434
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Extensions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Dynamite : MonoBehaviour
 {
@@ -17,19 +18,23 @@ public class Dynamite : MonoBehaviour
     public GameObject explosionEffect;
     private bool hasExploded = false;
 
-    public float speed = 4f;
+    [FormerlySerializedAs("speed")] public float initialThrowForce = 4f;
 
     public Vector3 launchOffset;
 
-    public bool thrown;
+    public bool thrown = false;
     
     // Start is called before the first frame update
     void Start()
     {
         if (thrown)
         {
-            var direction = -transform.right + Vector3.up;
-            GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Impulse);
+            var mousePosition = Input.mousePosition;
+            mousePosition.z = 10.0f;
+            if (Camera.main != null) mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            var mouseDirection = mousePosition - gameObject.transform.position;
+            mouseDirection.z = 0.0f;
+            GetComponent<Rigidbody2D>().AddForce(mouseDirection * initialThrowForce, ForceMode2D.Impulse);
         }
         transform.Translate(launchOffset);
         
@@ -54,6 +59,7 @@ public class Dynamite : MonoBehaviour
     }
 
     // Method is public so that player can call it on command
+    // Partially inspired by https://stackoverflow.com/a/66453571
     public void Explode()
     {
         hasExploded = true;
@@ -80,8 +86,11 @@ public class Dynamite : MonoBehaviour
             
             // In case dynamite is inside the object
             var explosionDistance = Mathf.Max(explosionDir.magnitude, minimalExplosionDistance);
+            explosionDistance /= 8; // for better reach
+            
+            // var explosionDistance = explosionDir.magnitude;
             const ForceMode2D mode = ForceMode2D.Impulse;
-    
+
             if (upwardsModifier <= 0.01f)
                 explosionDir /= explosionDistance;
             else
@@ -91,9 +100,7 @@ public class Dynamite : MonoBehaviour
             }
             
             rb.AddForce(Mathf.Lerp(0, blastForce, (1 - explosionDistance)) * explosionDir, mode);
-            
-            // rb.velocity = new Vector2(rb.velocity.x, blastForce);
-            
+       
             // Damage
         }
     

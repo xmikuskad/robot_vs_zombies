@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -20,6 +21,17 @@ public class DebuggingPlayerMovement : MonoBehaviour
 
     private GameObject activeDynamite = null;
     private float activeDynamiteTimer = 0f;
+    
+    // how many dynamites should regenerate in one iteration
+    public int dynamiteRechargeCount = 1;
+    // max magazine
+    public int maxDynamiteMagazineCount = 2;
+    // current magazine
+    public int dynamiteMagazineCount = 2;
+    // how often magazine recharges
+    public float dynamiteMagazineRechargeRate = 1.0f;
+    // current recharge progression
+    public float dynamiteMagazineRechargeTimer = 0.0f;
 
     float xInput;
 
@@ -42,25 +54,35 @@ public class DebuggingPlayerMovement : MonoBehaviour
         }
 
         HandlePlayerDetonation();
+        UpdateDynamiteMagazine();
     }
 
-    void HandlePlayerDetonation()
+    private void UpdateDynamiteMagazine()
     {
-        if (activeDynamite != null)
+        dynamiteMagazineRechargeTimer += Time.deltaTime;
+        
+        if (dynamiteMagazineRechargeTimer >= dynamiteMagazineRechargeRate)
         {
-            activeDynamiteTimer += Time.deltaTime;
-            
-            if (Input.GetKeyUp(KeyCode.Mouse0))
-            {
-                if (activeDynamiteTimer >= minExplodeTime)
-                {
-                    Dynamite dynamite = activeDynamite.GetComponent<Dynamite>();
-                    if (dynamite != null)
-                    {
-                        dynamite.Explode();
-                    }
-                }
-            }
+            dynamiteMagazineCount = Math.Min(maxDynamiteMagazineCount, dynamiteMagazineCount + dynamiteRechargeCount);
+            dynamiteMagazineRechargeTimer -= dynamiteMagazineRechargeRate;
+        }
+    }
+
+    private void HandlePlayerDetonation()
+    {
+        if (activeDynamite == null) return;
+        
+        activeDynamiteTimer += Time.deltaTime;
+
+        // Handle on key release
+        if (!Input.GetKeyUp(KeyCode.Mouse0)) return;
+
+        if (!(activeDynamiteTimer >= minExplodeTime)) return;
+        
+        var dynamiteScript = activeDynamite.GetComponent<Dynamite>();
+        if (dynamiteScript != null)
+        {
+            dynamiteScript.Explode();
         }
     }
 
@@ -68,15 +90,21 @@ public class DebuggingPlayerMovement : MonoBehaviour
     {
         // rb.velocity = new Vector2(xInput * speed, rb.velocity.y);
     }
+    
 
     void ThrowDynamite()
     {
+        // If magazine is empty, do nothing
+        if (dynamiteMagazineCount <= 0) return;
+        
+        dynamiteMagazineCount -= 1;
         
         GameObject newDynamite = Instantiate(dynamite, transform.position, transform.rotation);
-        Rigidbody2D rb = newDynamite.GetComponent<Rigidbody2D>();
-        if (rb != null)
+        
+        Rigidbody2D dynamiteRb = newDynamite.GetComponent<Rigidbody2D>();
+        if (dynamiteRb != null)
         {
-            
+            dynamiteRb.velocity = rb.velocity;
         }
 
         activeDynamiteTimer = 0f;
