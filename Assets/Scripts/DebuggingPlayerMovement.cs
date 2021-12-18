@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.XR;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -17,7 +18,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
     public float throwForce = 10f;
     public GameObject dynamite;
     
-    public float minExplodeTime = .0f;
+    [FormerlySerializedAs("minExplodeTime")] public float minMouseHoldToDetonateTime = .0f;
 
     private GameObject activeDynamite = null;
     private float activeDynamiteTimer = 0f;
@@ -33,8 +34,8 @@ public class DebuggingPlayerMovement : MonoBehaviour
     // current recharge progression
     public float dynamiteMagazineRechargeTimer = 0.0f;
 
-    public float deltaExplosionTime = 0.0f;
-    public float minDeltaExplosionTime = 0.5f;
+    [FormerlySerializedAs("deltaExplosionTime")] public float deltaDetonationTime = 0.0f;
+    [FormerlySerializedAs("minDeltaExplosionTime")] public float minDeltaDetonationTime = 0.5f;
 
     float xInput;
 
@@ -74,25 +75,26 @@ public class DebuggingPlayerMovement : MonoBehaviour
     private void HandlePlayerDetonation()
     {
         // Minimal time between detonations
-        deltaExplosionTime += Time.deltaTime;
-        if (deltaExplosionTime < minDeltaExplosionTime) return;
+        deltaDetonationTime += Time.deltaTime;
+        if (deltaDetonationTime < minDeltaDetonationTime) return;
         // To prevent potential overflow 
-        deltaExplosionTime = minDeltaExplosionTime;
+        deltaDetonationTime = minDeltaDetonationTime;
         
         if (activeDynamite == null) return;
         
         activeDynamiteTimer += Time.deltaTime;
 
-        // Handle on key release
+        // If left click up not detected, do nothing
         if (!Input.GetKeyUp(KeyCode.Mouse0)) return;
 
-        if (!(activeDynamiteTimer >= minExplodeTime)) return;
+        // To make sure you can throw multiple long dynamites without immediately exploding
+        if (!(activeDynamiteTimer >= minMouseHoldToDetonateTime)) return;
         
         var dynamiteScript = activeDynamite.GetComponent<Dynamite>();
         if (dynamiteScript != null)
         {
             dynamiteScript.Explode();
-            deltaExplosionTime = 0.0f;
+            deltaDetonationTime = 0.0f;
         }
     }
 
