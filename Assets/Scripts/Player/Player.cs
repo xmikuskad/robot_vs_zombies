@@ -47,9 +47,7 @@ public class Player : MonoBehaviour
     [FormerlySerializedAs("deltaExplosionTime")] public float deltaDetonationTime = 0.0f;
     [FormerlySerializedAs("minDeltaExplosionTime")] public float minDeltaDetonationTime = 0.5f;
     
-    public float attackRange = 2.0f;
-    public int meleeDamage = 2;
-    enum AttackDirection {Left, Right}
+
 
     void Start()
     {
@@ -62,16 +60,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            MeleeAttack(AttackDirection.Left);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            MeleeAttack(AttackDirection.Right);
-        }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -190,36 +178,5 @@ public class Player : MonoBehaviour
     {
         currentHeartPoints -= damage;
     }
-    void MeleeAttack(AttackDirection attackDirection)
-    {
-        Vector2 playerPos = transform.position;
-        var colliders = Physics2D.OverlapCircleAll(playerPos, attackRange);
-        foreach (var nearbyObject in colliders)
-        {
-            var enemy = nearbyObject.GetComponent<IEnemy>();
-            if (enemy == null) continue;
- 
-            if (attackDirection == AttackDirection.Left)
-            {
-                if (nearbyObject.transform.position.x < transform.position.x)
-                {
-                    enemy.TakeDamage(meleeDamage);
-                }
-            }
-            else // attackDirection == Right
-            {
-                if (nearbyObject.transform.position.x > transform.position.x)
-                {
-                    enemy.TakeDamage(meleeDamage);
-                }
-            }
-            
-        }
-    }
     
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
 }
