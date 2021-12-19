@@ -16,6 +16,8 @@ public class WalkingEnemy : PlayerFollower,IEnemy
     [SerializeField]
     private AudioClip deathSound;
 
+    
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -53,6 +55,7 @@ public class WalkingEnemy : PlayerFollower,IEnemy
 
     public void TakeExplosionDamage(int damage)
     {
+        Stun();
         this.health -= damage;
         if(health <= 0)
         {
