@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1706520474}
   m_Layer: 7
   m_Name: ShootingEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d153c582c0e97ee4397c3f83f64dceea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 3
   damage: 1
   range: 15
   speed: 8

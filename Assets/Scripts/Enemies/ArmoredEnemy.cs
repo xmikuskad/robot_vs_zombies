@@ -26,6 +26,7 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
         FollowPlayer();
     }
 
+    // Called as animator event
     public void DealDamage()
     {
         Vector2 playerPos = player.transform.position;

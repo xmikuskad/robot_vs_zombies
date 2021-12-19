@@ -7,6 +7,8 @@ TagManager:
   - AudioManager
   - Platform
   - PlatformTrigger
+  - Enemy
+  - GameMenu
   layers:
   - Default
   - TransparentFX

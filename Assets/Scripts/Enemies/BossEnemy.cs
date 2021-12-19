@@ -8,6 +8,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
 {
     [SerializeField]
     private int health;
+    private int actualHealth;
     [SerializeField]
     private int damage;
     [SerializeField]
@@ -38,8 +39,6 @@ public class BossEnemy : MonoBehaviour, IEnemy
 
     [Header("Sounds")]
     [SerializeField]
-    private AudioClip hitSound;
-    [SerializeField]
     private AudioClip deathSound;
 
 
@@ -51,6 +50,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
     {
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        actualHealth = health;
     }
 
     void Start()
@@ -58,7 +58,6 @@ public class BossEnemy : MonoBehaviour, IEnemy
         player = GameObject.FindGameObjectWithTag(Constants.PlayerTag).transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(delayCounter > 0f)
@@ -110,8 +109,6 @@ public class BossEnemy : MonoBehaviour, IEnemy
             dynamite.SetIsEvil(true);
             dynamite.SetCountdown(countdown);
         }
-
-        // TODO animate
     }
 
     public int GetDamage()
@@ -126,8 +123,9 @@ public class BossEnemy : MonoBehaviour, IEnemy
 
     public void TakeMeleeDamage(int damage)
     {
-        this.health -= damage;
-        if (health <= 0)
+        Debug.Log("Taking damage " + damage);
+        this.actualHealth -= damage;
+        if (actualHealth <= 0)
         {
             OnDeath();
         }
@@ -141,6 +139,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
 
     public void DestroyThis()
     {
+        GameObject.FindGameObjectWithTag(Constants.GameMenuTag).GetComponent<GameMenu>().WinGame();
         Destroy(this.gameObject);
     }
 
@@ -151,8 +150,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
 
     public float GetHealthRatio()
     {
-        // TODO return actHealth/maxHealth
-        return 0.5f;
+        return actualHealth/(health*1.0f);
     }
 
 }

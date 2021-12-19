@@ -46,14 +46,16 @@ public class Player : MonoBehaviour
 
     [FormerlySerializedAs("deltaExplosionTime")] public float deltaDetonationTime = 0.0f;
     [FormerlySerializedAs("minDeltaExplosionTime")] public float minDeltaDetonationTime = 0.5f;
-    
 
+    [SerializeField]
+    private GameMenu gameMenu;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         dynamiteMagazineCount = maxDynamiteMagazineCount;
         currentHeartPoints = maxHeartPoints;
+        gameMenu = GameObject.FindGameObjectWithTag(Constants.GameMenuTag).GetComponent<GameMenu>();
         visualMagazineDynamites = new GameObject[Math.Max(maxDynamiteMagazineCount, maxVisualDynamites)];
         SpawnMagazineDynamites();
     }
@@ -176,7 +178,12 @@ public class Player : MonoBehaviour
 
     public void HitForDamage(int damage)
     {
+        gameMenu.LoseHearth(maxHeartPoints - currentHeartPoints);
         currentHeartPoints -= damage;
+        if (currentHeartPoints <= 0)
+        {
+            gameMenu.LoseGame();
+        }
     }
     
 }
