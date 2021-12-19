@@ -7,6 +7,12 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
     [SerializeField]
     private int damage;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioClip hitSound;
+    [SerializeField]
+    private AudioClip deathSound;
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -27,6 +33,7 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
             Mathf.Abs(playerPos.y-transform.position.y) <= attackRange.y)
         {
             // TODO deal damage
+            AudioManager.Instance.PlayClip(hitSound, 3f);
         }
     }
 
@@ -41,6 +48,12 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
     }
 
     public void OnDeath()
+    {
+        animator.SetTrigger(Constants.AnimDeath);
+        AudioManager.Instance.PlayClip(deathSound,3f);
+    }
+
+    public void DestroyThis()
     {
         Destroy(this.gameObject);
     }

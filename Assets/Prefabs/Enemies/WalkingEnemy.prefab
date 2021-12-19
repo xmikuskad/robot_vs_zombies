@@ -162,7 +162,8 @@ MonoBehaviour:
   timeBetweenAttacks: 1
   health: 2
   damage: 1
-  forcePower: 10
+  hitSound: {fileID: 8300000, guid: 9b0d4c94680e8004a996457e1618ca08, type: 3}
+  deathSound: {fileID: 8300000, guid: dc1c8849764724c4080f19192c41f855, type: 3}
 --- !u!212 &4952309447624641670
 SpriteRenderer:
   m_ObjectHideFlags: 0

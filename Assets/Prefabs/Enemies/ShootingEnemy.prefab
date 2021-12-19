@@ -63,6 +63,8 @@ MonoBehaviour:
   fallingLayerMask:
     serializedVersion: 2
     m_Bits: 2048
+  hitSound: {fileID: 8300000, guid: 16945583df99e9c4c80b00bc502c097f, type: 3}
+  deathSound: {fileID: 8300000, guid: 717f94e1a7de18e47ae71ae64abbe790, type: 3}
 --- !u!50 &1908716787288545361
 Rigidbody2D:
   serializedVersion: 4

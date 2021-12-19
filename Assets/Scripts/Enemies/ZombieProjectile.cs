@@ -9,15 +9,18 @@ public class ZombieProjectile : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb;
 
+    private AudioClip hitSound;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void InitializeProjectile(Vector2 velocity)
+    public void InitializeProjectile(Vector2 velocity, AudioClip hitSound)
     {
         rb.velocity = velocity;
+        this.hitSound = hitSound;
         Destroy(this.gameObject, 10f);  // In case this does not hit anything
     }
 
@@ -30,6 +33,7 @@ public class ZombieProjectile : MonoBehaviour
         if (collision.tag.Equals(Constants.PlayerTag))
         {
             // TODO deal damage
+            AudioManager.Instance.PlayClip(hitSound, 3f);
             MakeSplash();
         }
     }

@@ -91,6 +91,8 @@ MonoBehaviour:
   attackRange: {x: 2, y: 1}
   timeBetweenAttacks: 1
   damage: 1
+  hitSound: {fileID: 8300000, guid: 4877465feff2682498d93f73ad06afa9, type: 3}
+  deathSound: {fileID: 8300000, guid: 7c889a4e0cf6c6241a68f0aea6045f64, type: 3}
 --- !u!61 &1912655556851465313
 BoxCollider2D:
   m_ObjectHideFlags: 0
