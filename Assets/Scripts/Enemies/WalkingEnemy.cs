@@ -23,7 +23,7 @@ public class WalkingEnemy : PlayerFollower,IEnemy
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            SetIsJumping(true);
+            SetIsFlying(true);
             rb.AddForce(new Vector2(1, 1) * forcePower, ForceMode2D.Impulse);
         }
     }

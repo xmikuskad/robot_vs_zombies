@@ -13,6 +13,7 @@ public static class Constants
     public const string AudioManagerTag = "AudioManager";
     public const string PlayerTag = "Player";
     public const string PlatformTag = "Platform";
+    public const string PlatformTriggerTag = "PlatformTrigger";
 
     // Player prefs
     public const string AudioVolume = "AudioVolume";
