@@ -21,11 +21,7 @@ public class WalkingEnemy : PlayerFollower,IEnemy
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            SetIsJumping(true);
-            rb.AddForce(new Vector2(1, 1) * forcePower, ForceMode2D.Impulse);
-        }
+
     }
 
     // Update is called once per frame
@@ -34,6 +30,15 @@ public class WalkingEnemy : PlayerFollower,IEnemy
         FollowPlayer();
     }
 
+    public void DealDamage()
+    {
+        Vector2 playerPos = player.transform.position;
+        if (Mathf.Abs(playerPos.x - transform.position.x) <= attackRange.x &&
+            Mathf.Abs(playerPos.y - transform.position.y) <= attackRange.y)
+        {
+            // TODO deal damage
+        }
+    }
 
     public int GetDamage()
     {
@@ -52,5 +57,10 @@ public class WalkingEnemy : PlayerFollower,IEnemy
     public void OnDeath()
     {
         Destroy(this.gameObject);
+    }
+
+    public void OnSpawn(float mapHeight)
+    {
+        // TODO
     }
 }

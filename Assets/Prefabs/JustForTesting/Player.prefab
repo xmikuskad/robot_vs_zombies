@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5349622003449932447}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.68, y: 0.3695951, z: -10.973289}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a9bf37f826253914086b72de6c46212d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7596915f96bab374e999df905bfdb60c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 10
+  jumpForce: 7
   throwForce: 10
   dynamite: {fileID: 4300770987309840910, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
   minMouseHoldToDetonateTime: 0.15
