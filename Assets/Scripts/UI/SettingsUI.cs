@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsUI : MainMenu
+public class SettingsUI : BasicMenuManager
 {
     [SerializeField]
     private float defaultGlobalVolume = 0.5f;

@@ -505,6 +505,18 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.6320754
       objectReference: {fileID: 0}
+    - target: {fileID: 8226306250135655624, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250135655624, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250135655624, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8226306250567996076, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.b
       value: 0.6320754
