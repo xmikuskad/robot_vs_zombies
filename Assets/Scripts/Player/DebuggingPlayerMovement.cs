@@ -34,7 +34,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
     // current recharge progression
     public float dynamiteMagazineRechargeTimer = 0.0f;
     private GameObject[] visualMagazineDynamites;
-    public int maxVisualDynamites = 4;
+    public int maxVisualDynamites = 3;
     public GameObject visualDynamite;
 
     [FormerlySerializedAs("deltaExplosionTime")] public float deltaDetonationTime = 0.0f;
@@ -46,7 +46,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         visualMagazineDynamites = new GameObject[Math.Max(maxDynamiteMagazineCount, maxVisualDynamites)];
-
+        SpawnMagazineDynamites();
     }
 
     private void Update()
@@ -72,6 +72,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
         
         if (dynamiteMagazineRechargeTimer >= dynamiteMagazineRechargeRate)
         {
+            SpawnSingleMagazineDynamite(dynamiteMagazineCount);
             dynamiteMagazineCount = Math.Min(maxDynamiteMagazineCount, dynamiteMagazineCount + dynamiteRechargeCount);
             dynamiteMagazineRechargeTimer -= dynamiteMagazineRechargeRate;
         }
@@ -87,9 +88,22 @@ public class DebuggingPlayerMovement : MonoBehaviour
 
     private void SpawnSingleMagazineDynamite(int index)
     {
-        if (index > maxVisualDynamites) return;
+        if (index > maxVisualDynamites - 1) return;
 
-        visualMagazineDynamites[index] = Instantiate(visualDynamite, transform.position, transform.rotation);
+        int position = maxVisualDynamites - index;
+        Quaternion spawnRotation = Quaternion.Euler(0,0,90);
+        Vector2 spawnPosition = transform.position;
+        spawnPosition.y += 0.35f - (0.35f * position);
+        visualMagazineDynamites[index] = Instantiate(visualDynamite, spawnPosition, spawnRotation);
+        visualMagazineDynamites[index].transform.parent = transform;
+        
+    }
+
+    private void DestroySingleMagazineDynamite(int index)
+    {
+        if (index > maxVisualDynamites) return;
+        
+        Destroy(visualMagazineDynamites[index]);
     }
 
     private void HandlePlayerDetonation()
@@ -129,6 +143,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
         if (dynamiteMagazineCount <= 0) return;
         
         dynamiteMagazineCount -= 1;
+        DestroySingleMagazineDynamite(dynamiteMagazineCount);
         
         GameObject newDynamite = Instantiate(dynamite, transform.position, transform.rotation);
         
