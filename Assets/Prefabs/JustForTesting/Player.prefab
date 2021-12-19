@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7596915f96bab374e999df905bfdb60c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a9bf37f826253914086b72de6c46212d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,14 +122,14 @@ MonoBehaviour:
   jumpForce: 7
   throwForce: 10
   dynamite: {fileID: 4300770987309840910, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
-  minMouseHoldToDetonateTime: 0.15
+  minMouseHoldToDetonateTime: 0.12
   dynamiteRechargeCount: 1
-  maxDynamiteMagazineCount: 4
-  dynamiteMagazineCount: 2
-  dynamiteMagazineRechargeRate: 0.9
+  maxDynamiteMagazineCount: 3
+  dynamiteMagazineCount: 3
+  dynamiteMagazineRechargeRate: 0.8
   dynamiteMagazineRechargeTimer: 0
-  maxVisualDynamites: 4
-  visualDynamite: {fileID: 0}
+  maxVisualDynamites: 3
+  visualDynamite: {fileID: 2937559990438876019, guid: 9ce7626d86ddf8942938dc796c9d8646, type: 3}
   deltaDetonationTime: 0
   minDeltaDetonationTime: 0.15
 --- !u!61 &5349622003449932434
