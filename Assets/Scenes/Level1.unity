@@ -912,7 +912,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 239274385341958018, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
       propertyPath: attackRange
-      value: 3.92
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 5349622003449932432, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
       propertyPath: m_SortingOrder

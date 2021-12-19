@@ -53,7 +53,7 @@ public class PlayerAttack : MonoBehaviour
             var enemy = nearbyObject.GetComponent<IEnemy>();
             if (enemy == null) continue;
             
-            enemy.TakeDamage(meleeDamage);
+            enemy.TakeMeleeDamage(meleeDamage);
         }
     }
     

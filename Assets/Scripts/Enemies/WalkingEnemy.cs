@@ -51,10 +51,19 @@ public class WalkingEnemy : PlayerFollower,IEnemy
         return damage;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeExplosionDamage(int damage)
     {
         this.health -= damage;
         if(health <= 0)
+        {
+            OnDeath();
+        }
+    }
+
+    public void TakeMeleeDamage(int damage)
+    {
+        this.health -= damage;
+        if (health <= 0)
         {
             OnDeath();
         }

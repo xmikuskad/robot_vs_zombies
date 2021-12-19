@@ -86,7 +86,7 @@ public class Dynamite : MonoBehaviour
             if (!isEvil)
             {
                 var enemy = nearbyObject.GetComponent<IEnemy>();
-                enemy?.TakeDamage(explosionDamage);
+                enemy?.TakeExplosionDamage(explosionDamage);
             }
 
             // Add Calculated Force
