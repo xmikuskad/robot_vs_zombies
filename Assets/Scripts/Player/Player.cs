@@ -180,10 +180,6 @@ public class Player : MonoBehaviour
     {
         gameMenu.LoseHearth(maxHeartPoints - currentHeartPoints);
         currentHeartPoints -= damage;
-        if (currentHeartPoints <= 0)
-        {
-            gameMenu.LoseGame();
-        }
     }
     
 }

@@ -57,11 +57,22 @@ public class GameMenu : MonoBehaviour
 
     public void LoseHearth(int index)
     {
-        if(index > hearths.Count)
+        if(index >= hearths.Count)
         {
             Debug.LogError("There are not that many hearths rdy!");
             return;
         }
         hearths[index].SetTrigger(Constants.AnimLoseHearth);
+        StartCoroutine(CheckLoseCondition(index));
+    }
+
+    private IEnumerator CheckLoseCondition(int index)
+    {
+        yield return new WaitForSeconds(0.25f);
+        if(index>= hearths.Count-1)
+        {
+            LoseGame();
+        }
+        yield return null;
     }
 }
