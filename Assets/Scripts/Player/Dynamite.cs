@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Extensions;
+using Newtonsoft.Json.Serialization;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -21,6 +22,8 @@ public class Dynamite : MonoBehaviour
 
     public GameObject explosionEffect;
     private bool hasExploded = false;
+
+    public Boolean isEvil = false;
 
     [FormerlySerializedAs("speed")] public float initialThrowForce = 4f;
 
@@ -50,6 +53,11 @@ public class Dynamite : MonoBehaviour
         countdown = value;
     }
 
+    public void SetIsEvil(Boolean value)
+    {
+        isEvil = value;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -75,9 +83,12 @@ public class Dynamite : MonoBehaviour
     
         foreach (var nearbyObject in colliders)
         {
-            var enemy = nearbyObject.GetComponent<IEnemy>();
-            enemy?.TakeDamage(explosionDamage);
-            
+            if (!isEvil)
+            {
+                var enemy = nearbyObject.GetComponent<IEnemy>();
+                enemy?.TakeExplosionDamage(explosionDamage);
+            }
+
             // Add Calculated Force
             var rb = nearbyObject.GetComponent<Rigidbody2D>();
             if (rb == null) continue; // If object without rigidbody, skip to the next one

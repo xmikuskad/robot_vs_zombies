@@ -43,7 +43,12 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
         return damage;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeExplosionDamage(int damage)
+    {
+        // Cannot take damage
+    }
+
+    public void TakeMeleeDamage(int damage)
     {
         // Cannot take damage
     }

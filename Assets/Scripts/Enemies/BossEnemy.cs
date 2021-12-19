@@ -107,6 +107,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
         dynamiteRb.AddTorque(impulse * throwForce, ForceMode2D.Impulse);
 
         if (projectile.TryGetComponent<Dynamite>(out var dynamite)) {
+            dynamite.SetIsEvil(true);
             dynamite.SetCountdown(countdown);
         }
 
@@ -118,7 +119,12 @@ public class BossEnemy : MonoBehaviour, IEnemy
         return damage;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeExplosionDamage(int damage)
+    {
+        //Cannot take explosion damage
+    }
+
+    public void TakeMeleeDamage(int damage)
     {
         this.health -= damage;
         if (health <= 0)
