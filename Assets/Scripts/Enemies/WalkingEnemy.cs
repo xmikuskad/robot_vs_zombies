@@ -9,8 +9,12 @@ public class WalkingEnemy : PlayerFollower,IEnemy
     private int health;
     [SerializeField]
     private int damage;
+
+    [Header("Sounds")]
     [SerializeField]
-    private float forcePower = 10f;
+    private AudioClip hitSound;
+    [SerializeField]
+    private AudioClip deathSound;
 
     // Start is called before the first frame update
     new void Start()
@@ -37,6 +41,7 @@ public class WalkingEnemy : PlayerFollower,IEnemy
             Mathf.Abs(playerPos.y - transform.position.y) <= attackRange.y)
         {
             // TODO deal damage
+            AudioManager.Instance.PlayClip(hitSound, 3f);
         }
     }
 
@@ -55,6 +60,12 @@ public class WalkingEnemy : PlayerFollower,IEnemy
     }
 
     public void OnDeath()
+    {
+        animator.SetTrigger(Constants.AnimDeath);
+        AudioManager.Instance.PlayClip(deathSound, 3f);
+    }
+
+    public void DestroyThis()
     {
         Destroy(this.gameObject);
     }

@@ -472,11 +472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4952309447624641668, guid: e69ef1595a3b5b84bb81bec0f97898fb, type: 3}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4952309447624641670, guid: e69ef1595a3b5b84bb81bec0f97898fb, type: 3}
-      propertyPath: m_FlipX
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4952309447624641671, guid: e69ef1595a3b5b84bb81bec0f97898fb, type: 3}
       propertyPath: m_RootOrder
@@ -537,7 +533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1912655556851465312, guid: 11d13596c51d10c4dacd8a67705fabee, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1912655556851465316, guid: 11d13596c51d10c4dacd8a67705fabee, type: 3}
       propertyPath: m_RootOrder
@@ -642,7 +638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1908716787288545364, guid: bcb6006a055c07c4ab0333236778239f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcb6006a055c07c4ab0333236778239f, type: 3}
@@ -1118,6 +1114,10 @@ PrefabInstance:
       propertyPath: waveText
       value: 
       objectReference: {fileID: 1802628708}
+    - target: {fileID: 8322598967013569885, guid: 885931306b946c54db91875b213a46c1, type: 3}
+      propertyPath: winSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 54c7b72b9efa5ba4aa1217efd89ca1bc, type: 3}
     - target: {fileID: 8322598967013569885, guid: 885931306b946c54db91875b213a46c1, type: 3}
       propertyPath: mapHeight
       value: 50

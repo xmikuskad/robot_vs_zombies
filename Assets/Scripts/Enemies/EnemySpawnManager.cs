@@ -44,6 +44,10 @@ public class EnemySpawnManager : MonoBehaviour
 
     private bool loadingWave = false;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioClip winSound;
+
     void Start()
     {
         waveIndex = -1;
@@ -78,6 +82,7 @@ public class EnemySpawnManager : MonoBehaviour
             // TODO game win!
             Debug.Log("GG!");
             shouldSpawn = false;
+            AudioManager.Instance.PlayClip(winSound, 1f);
             return;
         }
         UpdateWaveText();

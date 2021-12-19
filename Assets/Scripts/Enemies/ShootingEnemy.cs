@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class ShootingEnemy : MonoBehaviour, IEnemy
 {
@@ -33,11 +34,18 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
     private bool canShoot = false;
 
     private SpriteRenderer sr;
+    private Animator animator;
 
+    [Header("Sounds")]
+    [SerializeField]
+    private AudioClip hitSound;
+    [SerializeField]
+    private AudioClip deathSound;
 
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     void Start()
@@ -71,7 +79,7 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
         GameObject projectile = Instantiate(zombieProjectile, transform.position, Quaternion.identity);
         if (dir.x < 0) projectile.GetComponent<SpriteRenderer>().flipX = true;
         if(projectile.TryGetComponent<ZombieProjectile>(out var projectileScript)) {
-            projectileScript.InitializeProjectile(dir * speed);
+            projectileScript.InitializeProjectile(dir * speed, hitSound);
         }
 
     }
@@ -91,6 +99,12 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
     }
 
     public void OnDeath()
+    {
+        animator.SetTrigger(Constants.AnimDeath);
+        AudioManager.Instance.PlayClip(deathSound, 3f);
+    }
+
+    public void DestroyThis()
     {
         Destroy(this.gameObject);
     }
