@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -12,13 +13,19 @@ public class PlayerAttack : MonoBehaviour
 
     public LayerMask enemyMask;
 
+    public GameObject blastAttackEffect;
+    public GameObject meleeAttackIndicator;
+    public float blastEffectXOffset = 0.5f;
+
     public Transform rightAttackPosition;
     public Transform leftAttackPosition;
-    
+
+    private float meleeAttackIndicatorMaxWidth;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        meleeAttackIndicatorMaxWidth = meleeAttackIndicator.transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -27,22 +34,51 @@ public class PlayerAttack : MonoBehaviour
         
         if (attackCooldownTimer >= attackCooldown)
         {
+            
+            attackCooldownTimer = attackCooldown;
+            
             if (Input.GetKeyDown(KeyCode.A))
             {
+                var attackPosition = transform.position;
+                attackPosition.z = 1f;
+                attackPosition.x -= blastEffectXOffset;
+                Quaternion spawnRotation = Quaternion.Euler(0,0,180);
+                GameObject attackAnimation = Instantiate(blastAttackEffect, attackPosition, spawnRotation);
+                attackAnimation.transform.parent = transform;
                 MeleeAttack(leftAttackPosition);
+                
+                attackCooldownTimer = 0.01f;
             }
         
             if (Input.GetKeyDown(KeyCode.D))
             {
+                var attackPosition = transform.position;
+                attackPosition.z = 1f;
+                attackPosition.x += blastEffectXOffset;
+                Quaternion spawnRotation = Quaternion.Euler(0,0,0);
+                GameObject attackAnimation = Instantiate(blastAttackEffect, attackPosition, spawnRotation);
+                attackAnimation.transform.parent = transform;
                 MeleeAttack(rightAttackPosition);
-            }
 
-            attackCooldownTimer = attackCooldown;
+                attackCooldownTimer = 0.01f;
+            }
         }
         else
         {
             attackCooldownTimer += Time.deltaTime;
         }
+
+        var newIndicatorScale = meleeAttackIndicator.transform.localScale;
+        if (attackCooldownTimer != 0)
+        {
+            newIndicatorScale.x = meleeAttackIndicatorMaxWidth / ((attackCooldown / attackCooldownTimer) + 0.01f);
+        }
+        else
+        {
+            newIndicatorScale.x = 0;
+        }
+        
+        meleeAttackIndicator.transform.localScale = newIndicatorScale;
     }
     
     void MeleeAttack(Transform attackPosition)
