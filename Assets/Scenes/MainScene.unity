@@ -493,6 +493,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8226306250135655624, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250135655624, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250135655624, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250567996076, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250567996076, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250567996076, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250780863629, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250780863629, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226306250780863629, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.6320754
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e1d5d044f5e5524db522b4d2afacdbc, type: 3}
 --- !u!1001 &8312088684696449543
