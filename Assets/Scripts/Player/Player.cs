@@ -179,8 +179,8 @@ public class Player : MonoBehaviour
         activeDynamite = newDynamite;
     }
 
-    public void HitForDamage()
+    public void HitForDamage(int damage)
     {
-        currentHeartPoints -= 1;
+        currentHeartPoints -= damage;
     }
 }
