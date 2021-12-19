@@ -41,6 +41,7 @@ public class WalkingEnemy : PlayerFollower,IEnemy
             Mathf.Abs(playerPos.y - transform.position.y) <= attackRange.y)
         {
             // TODO deal damage
+            player.GetComponent<Player>().HitForDamage(damage);
             AudioManager.Instance.PlayClip(hitSound, 3f);
         }
     }

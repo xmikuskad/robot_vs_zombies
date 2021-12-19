@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ZombieProjectile : MonoBehaviour
 {
+    public int damage = 1;
+    
+    private Transform player;
     private Animator animator;
     private Rigidbody2D rb;
 
@@ -15,6 +18,7 @@ public class ZombieProjectile : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        player = GameObject.FindGameObjectWithTag(Constants.PlayerTag).transform;
     }
 
     public void InitializeProjectile(Vector2 velocity, AudioClip hitSound)
@@ -34,6 +38,7 @@ public class ZombieProjectile : MonoBehaviour
         {
             // TODO deal damage
             Debug.Log("Hit player!");
+            player.GetComponent<Player>().HitForDamage(damage);
             AudioManager.Instance.PlayClip(hitSound, 3f);
             MakeSplash();
         }

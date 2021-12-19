@@ -14,6 +14,7 @@ public class Dynamite : MonoBehaviour
     public float blastForce = 5f;
     public float upwardsModifier = 0.1f;
     public float minimalExplosionDistance = 0.1f;
+    public int explosionDamage = 1;
 
     private float countdown;
     private Rigidbody2D rb;
@@ -74,6 +75,8 @@ public class Dynamite : MonoBehaviour
     
         foreach (var nearbyObject in colliders)
         {
+            var enemy = nearbyObject.GetComponent<IEnemy>();
+            enemy?.TakeDamage(explosionDamage);
             
             // Add Calculated Force
             var rb = nearbyObject.GetComponent<Rigidbody2D>();
