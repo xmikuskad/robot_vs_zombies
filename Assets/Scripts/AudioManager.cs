@@ -6,15 +6,11 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField]
     private float defaultGlobalVolume = 0.3f;
-
     private float actualGlobalVolume;
-
     private static AudioManager _instance;
-
     private AudioSource audioSource;
-
     [SerializeField]
-    private float backgroundSoundModifier = 0.2f;
+    private float backgroundSoundModifier = 0.2f;   // Because the main background track is too loud
 
     public static AudioManager Instance
     {

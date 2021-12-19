@@ -27,13 +27,16 @@ public class BossEnemy : MonoBehaviour, IEnemy
     private float minCountdown = 0.5f;
     [SerializeField]
     private float maxCountdown = 2f;
+    [SerializeField]
+    private float startDelay = 3f;
+    private float delayCounter = 3f;
 
+    [Header("References")]
     [SerializeField]
     private GameObject dynamitePrefab;
     [SerializeField]
     private GameObject dynamiteSpawnPoint;
     private Transform player;
-
     private SpriteRenderer sr;
     private Animator animator;
 
@@ -41,20 +44,11 @@ public class BossEnemy : MonoBehaviour, IEnemy
     [SerializeField]
     private AudioClip deathSound;
 
-
-    [SerializeField]
-    private float startDelay = 3f;
-    private float delayCounter = 3f;
-
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         actualHealth = health;
-    }
-
-    void Start()
-    {
         player = GameObject.FindGameObjectWithTag(Constants.PlayerTag).transform;
     }
 
@@ -111,11 +105,6 @@ public class BossEnemy : MonoBehaviour, IEnemy
         }
     }
 
-    public int GetDamage()
-    {
-        return damage;
-    }
-
     public void TakeExplosionDamage(int damage)
     {
         //Cannot take explosion damage
@@ -137,6 +126,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
         AudioManager.Instance.PlayClip(deathSound, 3f);
     }
 
+    // Called from animation event
     public void DestroyThis()
     {
         GameObject.FindGameObjectWithTag(Constants.GameMenuTag).GetComponent<GameMenu>().WinGame();

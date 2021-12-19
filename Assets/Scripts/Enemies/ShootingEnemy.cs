@@ -19,6 +19,7 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
     [SerializeField]
     private float timeBetweenAttacksCounter = 0f;
 
+    [Header("References")]
     [SerializeField]
     private GameObject zombieProjectile;
     private Transform player;
@@ -46,15 +47,14 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
     {
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag(Constants.PlayerTag).transform;
     }
 
     void Start()
     {
         this.gameObject.layer = GetLayerNumber(fallingLayerMask);
-        player = GameObject.FindGameObjectWithTag(Constants.PlayerTag).transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!canShoot) return;
@@ -84,11 +84,6 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
 
     }
 
-    public int GetDamage()
-    {
-        return damage;
-    }
-
     public void TakeExplosionDamage(int damage)
     {
         this.health -= damage;
@@ -113,6 +108,7 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
         AudioManager.Instance.PlayClip(deathSound, 3f);
     }
 
+    // Called from animation event
     public void DestroyThis()
     {
         Destroy(this.gameObject);
@@ -124,14 +120,16 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
         Vector2 endPos = transform.position;
         endPos.y -= mapHeight;
         RaycastHit2D[] hitColliders = Physics2D.LinecastAll(transform.position, endPos, platformLayerMask);
-        ignoringPlatformCount = Random.Range(0, Mathf.Max(0, hitColliders.Length - 2)); // -2 because of the top and bottom platform
+        ignoringPlatformCount = Random.Range(0, Mathf.Max(0, hitColliders.Length - 1)); // -1 because of the top platform
     }
 
+    // Convert layermask to layer number
     private int GetLayerNumber(LayerMask mask)
     {
         return (int)(Mathf.Log((uint)mask.value, 2));
     }
 
+    // Used when falling on spawn
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Equals(Constants.PlatformTag) || collision.tag.Equals(Constants.PlatformTriggerTag))

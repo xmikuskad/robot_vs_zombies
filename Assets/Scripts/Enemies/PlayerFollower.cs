@@ -13,48 +13,46 @@ public abstract class PlayerFollower : MonoBehaviour
     [SerializeField]
     private float platformCheckRange = 0.2f;
     [SerializeField]
+    private float triggerCheckRange = 15f;
+    [SerializeField]
+    private float jumpPowerPerUnit = 10f;
+    [SerializeField]
+    private float jumpTimePerUnit = 1f;
+    [SerializeField]
+    private float minPlatformHeight = 1.5f;
+    [SerializeField]
+    private float waitAfterJump = 0.5f;
+    [SerializeField]
+    private float jumpDownWait = 0.3f;
+    [SerializeField]
+    protected Vector2 attackRange = new Vector2(1f, 0.5f); // Needs to be protected because of inheritance
+    [SerializeField]
+    private float timeBetweenAttacks = 1f;
+    [SerializeField]
+    private float stunTime = 1.5f;
+    [Header("References")]
+    [SerializeField]
+    private LayerMask defaultMask;
+    [SerializeField]
+    private LayerMask jumpingLayerMask;
+    [SerializeField]
+    private LayerMask platformTriggerMask;
+
+    [Header("For debug, do not change")]
+    [SerializeField]
+    private float stunTimeRemaining = 0.0f;
+    [SerializeField]
+    private float waitTimeCounter = 0f;
+    [SerializeField]
     private bool isFlying = false;
+    [SerializeField]
+    private float timeBetweenAttacksCounter = 0f;
+
 
     protected Rigidbody2D rb;       // Needs to be protected because of inheritance
     protected Animator animator;    // Needs to be protected because of inheritance
     protected SpriteRenderer sr;    // Needs to be protected because of inheritance
     protected Transform player;     // Needs to be protected because of inheritance
-
-    [SerializeField]
-    private LayerMask platformTriggerMask;
-    [SerializeField]
-    private float triggerCheckRange = 15f;
-
-    [SerializeField]
-    private LayerMask defaultMask;
-    [SerializeField]
-    private LayerMask jumpingLayerMask;
-
-    [SerializeField]
-    private float jumpPowerPerUnit = 10f;
-    [SerializeField]
-    private float jumpTimePerUnit= 1f;
-
-    [SerializeField]
-    private float minPlatformHeight = 1.5f;
-
-    [SerializeField]
-    private float waitAfterJump = 0.5f;
-    [SerializeField]
-    private float waitTimeCounter = 0f;
-
-    [SerializeField]
-    private float jumpDownWait = 0.3f;
-
-    [SerializeField]
-    protected Vector2 attackRange = new Vector2(1f, 0.5f); // Needs to be protected because of inheritance
-
-    [SerializeField]
-    private float timeBetweenAttacks = 1f;
-    private float timeBetweenAttacksCounter = 0f;
-    
-    public float stunTimeRemaining = 0.0f;
-    public float stunTime = 1.5f;
 
     public void Start()
     {
@@ -72,18 +70,18 @@ public abstract class PlayerFollower : MonoBehaviour
 
     public void FollowPlayer()
     {
-        stunTimeRemaining -= Time.deltaTime;
+        stunTimeRemaining -= Time.fixedDeltaTime;
         if (stunTimeRemaining > 0.0f) return;
         stunTime = 0.0f;
 
-            if(timeBetweenAttacksCounter >= 0f)
+        if (timeBetweenAttacksCounter >= 0f)
         {
-            timeBetweenAttacksCounter -= Time.deltaTime;
+            timeBetweenAttacksCounter -= Time.fixedDeltaTime;
         }
 
         if (waitTimeCounter >= 0f)
         {
-            waitTimeCounter -= Time.deltaTime;
+            waitTimeCounter -= Time.fixedDeltaTime;
         }
         else
         {
@@ -109,7 +107,7 @@ public abstract class PlayerFollower : MonoBehaviour
 
         // Attack range check
         if (Mathf.Abs(player.position.x - this.transform.position.x) < attackRange.x &&
-            Mathf.Abs(player.position.y - this.transform.position.y) < attackRange.y && 
+            Mathf.Abs(player.position.y - this.transform.position.y) < attackRange.y &&
             timeBetweenAttacksCounter < 0f)
         {
             // TODO ATTACK
@@ -158,7 +156,7 @@ public abstract class PlayerFollower : MonoBehaviour
         if (colliders.Length == 0)
         {
             Debug.LogWarning("Couldnt find position to jump to");
-            waitTimeCounter = waitAfterJump*2;  // Allow him to move to other position
+            waitTimeCounter = waitAfterJump * 2;  // Allow him to move to other position
             return false;
         }
 
@@ -168,11 +166,12 @@ public abstract class PlayerFollower : MonoBehaviour
             float widthDistance = this.gameObject.transform.position.x - collider.gameObject.transform.position.x;  // Used to prevent "jumping" on the same place
             bool isLower = this.gameObject.transform.position.y - collider.gameObject.transform.position.y > 0;
             bool isRight = widthDistance > 0;
-            if (Mathf.Abs(widthDistance)>1f && isLower == shouldBeLower && isRight == shouldBeRight)    // Perfect situation
+            if (Mathf.Abs(widthDistance) > 1f && isLower == shouldBeLower && isRight == shouldBeRight)    // Perfect situation
             {
                 // Calculate random pos for jump
                 SpriteRenderer parentRenderer = collider.gameObject.GetComponentInParent<SpriteRenderer>(); // Fix around GetComponentInParent<Transform>() returning same Transform
-                if (parentRenderer != null) {
+                if (parentRenderer != null)
+                {
                     Vector3 destPos = collider.transform.position;
                     float halfSize = (parentRenderer.transform.localScale.x / 2f) - 1f;
                     destPos.x = destPos.x + Random.Range(-halfSize, halfSize);
@@ -198,7 +197,7 @@ public abstract class PlayerFollower : MonoBehaviour
 
     private IEnumerator JumpDown()
     {
-        waitTimeCounter = waitAfterJump+jumpDownWait;
+        waitTimeCounter = waitAfterJump + jumpDownWait;
         this.gameObject.layer = GetLayerNumber(jumpingLayerMask);
         yield return new WaitForSeconds(jumpDownWait);
         this.gameObject.layer = GetLayerNumber(defaultMask);
@@ -216,7 +215,7 @@ public abstract class PlayerFollower : MonoBehaviour
                 waitTimeCounter += jumpTimePerUnit * distance;
                 this.gameObject.layer = GetLayerNumber(jumpingLayerMask);
             })
-            .Insert(0, rb.DOJump(position, jumpPowerPerUnit*distance, 1, jumpTimePerUnit * distance))
+            .Insert(0, rb.DOJump(position, jumpPowerPerUnit * distance, 1, jumpTimePerUnit * distance))
             .AppendCallback(() =>
             {
                 this.gameObject.layer = GetLayerNumber(defaultMask);

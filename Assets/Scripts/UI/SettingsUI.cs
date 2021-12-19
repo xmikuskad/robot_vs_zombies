@@ -12,7 +12,6 @@ public class SettingsUI : BasicMenuManager
     private Slider volumeSlider;
     private AudioManager audioManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         volumeSlider.value = PlayerPrefs.GetFloat(Constants.AudioVolume,defaultGlobalVolume);

@@ -36,8 +36,6 @@ public class ZombieProjectile : MonoBehaviour
         }
         if (collision.tag.Equals(Constants.PlayerTag))
         {
-            // TODO deal damage
-            Debug.Log("Hit player!");
             player.GetComponent<Player>().HitForDamage(damage);
             AudioManager.Instance.PlayClip(hitSound, 3f);
             MakeSplash();
@@ -49,6 +47,7 @@ public class ZombieProjectile : MonoBehaviour
         animator.SetTrigger(Constants.AnimMakeSplash);
     }
 
+    // Called from animation event
     public void DestroyThis() {
         Destroy(this.gameObject);
     }

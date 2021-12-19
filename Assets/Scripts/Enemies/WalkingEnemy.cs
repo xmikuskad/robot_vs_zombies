@@ -16,21 +16,16 @@ public class WalkingEnemy : PlayerFollower,IEnemy
     [SerializeField]
     private AudioClip deathSound;
 
-    
-
-    // Start is called before the first frame update
-    new void Start()
+    private void Awake()
     {
-        base.Start();
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    new void Start()
     {
-
+        base.Start();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         FollowPlayer();
