@@ -52,6 +52,9 @@ public abstract class PlayerFollower : MonoBehaviour
     [SerializeField]
     private float timeBetweenAttacks = 1f;
     private float timeBetweenAttacksCounter = 0f;
+    
+    public float stunTimeRemaining = 0.0f;
+    public float stunTime = 1.5f;
 
     public void Start()
     {
@@ -61,9 +64,19 @@ public abstract class PlayerFollower : MonoBehaviour
         player = GameObject.FindGameObjectWithTag(Constants.PlayerTag).transform;
     }
 
+    public void Stun()
+    {
+        rb.velocity = Vector2.zero;
+        stunTimeRemaining = stunTime;
+    }
+
     public void FollowPlayer()
     {
-        if(timeBetweenAttacksCounter >= 0f)
+        stunTimeRemaining -= Time.deltaTime;
+        if (stunTimeRemaining > 0.0f) return;
+        stunTime = 0.0f;
+
+            if(timeBetweenAttacksCounter >= 0f)
         {
             timeBetweenAttacksCounter -= Time.deltaTime;
         }

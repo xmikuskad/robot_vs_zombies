@@ -1945,6 +1945,10 @@ PrefabInstance:
       propertyPath: maxHeartPoints
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5349622003449932446, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
+      propertyPath: currentHeartPoints
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5349622003449932447, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
       propertyPath: m_Name
       value: Player

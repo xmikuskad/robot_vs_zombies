@@ -90,6 +90,8 @@ MonoBehaviour:
   jumpDownWait: 1
   attackRange: {x: 2, y: 1}
   timeBetweenAttacks: 1
+  stunTimeRemaining: 0
+  stunTime: 3
   damage: 1
   hitSound: {fileID: 8300000, guid: 4877465feff2682498d93f73ad06afa9, type: 3}
   deathSound: {fileID: 8300000, guid: 7c889a4e0cf6c6241a68f0aea6045f64, type: 3}

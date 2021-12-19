@@ -46,6 +46,7 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
 
     public void TakeExplosionDamage(int damage)
     {
+        Stun();
         // Cannot take damage
     }
 
