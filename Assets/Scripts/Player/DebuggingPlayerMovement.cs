@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.XR;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class DebuggingPlayerMovement : MonoBehaviour
@@ -36,6 +37,9 @@ public class DebuggingPlayerMovement : MonoBehaviour
     private GameObject[] visualMagazineDynamites;
     public int maxVisualDynamites = 3;
     public GameObject visualDynamite;
+    public float visualDynamiteRenderOffset = 0.35f;
+    
+    public Vector3 dynamiteThrowOriginOffset;
 
     [FormerlySerializedAs("deltaExplosionTime")] public float deltaDetonationTime = 0.0f;
     [FormerlySerializedAs("minDeltaExplosionTime")] public float minDeltaDetonationTime = 0.5f;
@@ -93,7 +97,7 @@ public class DebuggingPlayerMovement : MonoBehaviour
         int position = maxVisualDynamites - index;
         Quaternion spawnRotation = Quaternion.Euler(0,0,90);
         Vector2 spawnPosition = transform.position;
-        spawnPosition.y += 0.35f - (0.35f * position);
+        spawnPosition.y += visualDynamiteRenderOffset - (visualDynamiteRenderOffset * position);
         visualMagazineDynamites[index] = Instantiate(visualDynamite, spawnPosition, spawnRotation);
         visualMagazineDynamites[index].transform.parent = transform;
         
@@ -150,8 +154,20 @@ public class DebuggingPlayerMovement : MonoBehaviour
         Rigidbody2D dynamiteRb = newDynamite.GetComponent<Rigidbody2D>();
         if (dynamiteRb != null)
         {
+            
             dynamiteRb.velocity = rb.velocity;
             dynamiteRb.rotation = rb.rotation;
+            
+            var mousePosition = Input.mousePosition;
+            mousePosition.z = 10.0f;
+            if (Camera.main != null) mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            var mouseDirection = mousePosition - gameObject.transform.position;
+            mouseDirection.z = 0.0f;
+            dynamiteRb.AddForce(mouseDirection * throwForce, ForceMode2D.Impulse);
+            var impulse = ( Random.Range(-180f, 180f) * Mathf.Deg2Rad) * dynamiteRb.inertia;
+            dynamiteRb.AddTorque(impulse * throwForce, ForceMode2D.Impulse);
+            
+            newDynamite.transform.Translate(dynamiteThrowOriginOffset);
         }
 
         activeDynamiteTimer = 0f;

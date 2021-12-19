@@ -997,20 +997,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5349622003449932446, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
-      propertyPath: visualDynamite
-      value: 
-      objectReference: {fileID: 2937559990438876019, guid: 9ce7626d86ddf8942938dc796c9d8646, type: 3}
-    - target: {fileID: 5349622003449932446, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
-      propertyPath: maxVisualDynamites
-      value: 3
+      propertyPath: throwForce
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5349622003449932446, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
-      propertyPath: dynamiteMagazineCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5349622003449932446, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
-      propertyPath: maxDynamiteMagazineCount
-      value: 3
+      propertyPath: dynamiteThrowOriginOffset.y
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5349622003449932447, guid: 96ceb3d1c65718c40b1d2a532403f010, type: 3}
       propertyPath: m_Name
