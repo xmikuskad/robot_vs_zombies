@@ -37,6 +37,11 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
         }
     }
 
+    public int GetDamage()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void TakeExplosionDamage(int damage)
     {
         Stun();

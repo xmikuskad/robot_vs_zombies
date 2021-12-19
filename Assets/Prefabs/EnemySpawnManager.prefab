@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372785892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 18.8, z: 0}
+  m_LocalPosition: {x: -148.1, y: 19.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8322598967013569884}
@@ -75,10 +75,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveInfos:
+  - {fileID: 11400000, guid: 4c84d8e53a76d154a92777b60741188b, type: 2}
   - {fileID: 11400000, guid: 3ee64e4d92c186d48b90163f6ce06249, type: 2}
-  - {fileID: 11400000, guid: d25827342e4a39540a101e93c1bd2278, type: 2}
   - {fileID: 11400000, guid: 92000441217bafb4499e03f1013a9767, type: 2}
-  mapHeight: 50
+  - {fileID: 11400000, guid: d25827342e4a39540a101e93c1bd2278, type: 2}
+  - {fileID: 11400000, guid: fd1ad026957e66343b4e1c2094a55397, type: 2}
+  mapHeight: 60
   bossSpawnPosition: {fileID: 1372785892}
   enemySpawners:
   - {fileID: 0}

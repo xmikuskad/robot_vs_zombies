@@ -141,27 +141,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   platformCheckRange: 0.2
-  isFlying: 0
-  platformTriggerMask:
-    serializedVersion: 2
-    m_Bits: 1024
   triggerCheckRange: 15
+  jumpPowerPerUnit: 0.2
+  jumpTimePerUnit: 0.1
+  minPlatformHeight: 4
+  waitAfterJump: 2
+  jumpDownWait: 1
+  attackRange: {x: 2, y: 1}
+  timeBetweenAttacks: 1
+  stunTime: 1.5
   defaultMask:
     serializedVersion: 2
     m_Bits: 128
   jumpingLayerMask:
     serializedVersion: 2
     m_Bits: 2048
-  jumpPowerPerUnit: 0.2
-  jumpTimePerUnit: 0.1
-  minPlatformHeight: 4
-  waitAfterJump: 2
-  waitTimeCounter: 0
-  jumpDownWait: 1
-  attackRange: {x: 2, y: 1}
-  timeBetweenAttacks: 1
+  platformTriggerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   stunTimeRemaining: 0
-  stunTime: 1.5
+  waitTimeCounter: 0
+  isFlying: 0
+  timeBetweenAttacksCounter: 0
   health: 2
   damage: 1
   hitSound: {fileID: 8300000, guid: 9b0d4c94680e8004a996457e1618ca08, type: 3}
