@@ -14,6 +14,8 @@ public static class Constants
     public const string PlayerTag = "Player";
     public const string PlatformTag = "Platform";
     public const string PlatformTriggerTag = "PlatformTrigger";
+    public const string EnemyTag = "Enemy";
+    public const string GameMenuTag = "GameMenu";
 
     // Player prefs
     public const string AudioVolume = "AudioVolume";
@@ -24,4 +26,5 @@ public static class Constants
     public const string AnimDeath = "death";
     public const string AnimMakeSplash = "splash";
     public const string AnimFire = "fire";
+    public const string AnimLoseHearth = "loseHearth";
 }

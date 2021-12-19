@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 248180937}
   m_Layer: 7
   m_Name: BossEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9032d94a2597f544a60e71209dff481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 40
   damage: 0
   timeBetweenDynamites: 0.1
   timeBetweenAttacks: 3
@@ -160,8 +160,7 @@ MonoBehaviour:
   maxCountdown: 1
   dynamitePrefab: {fileID: 4300770987309840910, guid: eacc81bc8e15664479273fc9f1465e99, type: 3}
   dynamiteSpawnPoint: {fileID: 1318205287}
-  hitSound: {fileID: 0}
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 7c889a4e0cf6c6241a68f0aea6045f64, type: 3}
   startDelay: 3
 --- !u!50 &248180936
 Rigidbody2D:

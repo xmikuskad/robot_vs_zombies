@@ -15,10 +15,10 @@ public abstract class PlayerFollower : MonoBehaviour
     [SerializeField]
     private bool isFlying = false;
 
-    protected Rigidbody2D rb;   // Needs to be protected because of inheritance
-    protected Animator animator;   // Needs to be protected because of inheritance
-    protected SpriteRenderer sr;   // Needs to be protected because of inheritance
-    protected Transform player;
+    protected Rigidbody2D rb;       // Needs to be protected because of inheritance
+    protected Animator animator;    // Needs to be protected because of inheritance
+    protected SpriteRenderer sr;    // Needs to be protected because of inheritance
+    protected Transform player;     // Needs to be protected because of inheritance
 
     [SerializeField]
     private LayerMask platformTriggerMask;
@@ -79,7 +79,7 @@ public abstract class PlayerFollower : MonoBehaviour
                 animator.SetBool(Constants.AnimRunning, false);
                 return;
             }
-            // TODO make a delay for this?
+
             // Should we jump up/down ?
             if (Mathf.Abs(this.transform.position.y - player.transform.position.y) > minPlatformHeight)
             {

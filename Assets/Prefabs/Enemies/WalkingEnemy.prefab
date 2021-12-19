@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 1596812371}
   m_Layer: 7
   m_Name: WalkingEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
   jumpDownWait: 1
   attackRange: {x: 2, y: 1}
   timeBetweenAttacks: 1
-  health: 2
+  health: 4
   damage: 1
   hitSound: {fileID: 8300000, guid: 9b0d4c94680e8004a996457e1618ca08, type: 3}
   deathSound: {fileID: 8300000, guid: dc1c8849764724c4080f19192c41f855, type: 3}
