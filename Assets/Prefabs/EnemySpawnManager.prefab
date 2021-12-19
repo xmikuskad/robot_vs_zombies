@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1372785892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1372785893}
+  m_Layer: 0
+  m_Name: BossSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1372785893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372785892}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 18.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8322598967013569884}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8322598967013569859
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +57,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1372785893}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43,12 +74,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d70597fc4f8bf4faab5c6aa583307d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveInfos: []
+  waveInfos:
+  - {fileID: 11400000, guid: 3ee64e4d92c186d48b90163f6ce06249, type: 2}
+  - {fileID: 11400000, guid: d25827342e4a39540a101e93c1bd2278, type: 2}
+  - {fileID: 11400000, guid: 92000441217bafb4499e03f1013a9767, type: 2}
+  mapHeight: 50
+  bossSpawnPosition: {fileID: 1372785892}
   enemySpawners:
+  - {fileID: 0}
   - {fileID: 0}
   waveText: {fileID: 0}
   timerText: {fileID: 0}
-  walkingEnemyPrefab: {fileID: 0}
-  armoredEnemyPrefab: {fileID: 0}
-  shootingEnemyPrefab: {fileID: 0}
-  bossEnemyPrefab: {fileID: 0}
+  bossHp: {fileID: 0}
+  walkingEnemyPrefab: {fileID: 4952309447624641668, guid: e69ef1595a3b5b84bb81bec0f97898fb, type: 3}
+  armoredEnemyPrefab: {fileID: 1912655556851465312, guid: 11d13596c51d10c4dacd8a67705fabee, type: 3}
+  shootingEnemyPrefab: {fileID: 1908716787288545364, guid: bcb6006a055c07c4ab0333236778239f, type: 3}
+  bossEnemyPrefab: {fileID: 7973051139596568723, guid: c9cf3da187b49644fbe8a2db5fb886ce, type: 3}
+  waveTimeLeft: 0
+  winSound: {fileID: 8300000, guid: 54c7b72b9efa5ba4aa1217efd89ca1bc, type: 3}

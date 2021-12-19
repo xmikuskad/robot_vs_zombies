@@ -23,4 +23,5 @@ public static class Constants
     public const string AnimAttack = "attack";
     public const string AnimDeath = "death";
     public const string AnimMakeSplash = "splash";
+    public const string AnimFire = "fire";
 }

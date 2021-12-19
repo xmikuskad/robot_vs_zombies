@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 25
   m_Sprite: {fileID: 21300000, guid: dd6b17afad01f114d9eceeea56527c00, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -151,5 +151,4 @@ MonoBehaviour:
   minimalExplosionDistance: 0.74
   explosionEffect: {fileID: 3864045702578427264, guid: edf47ad95c28c814b9afbb2f8dcf6972, type: 3}
   initialThrowForce: 2.5
-  launchOffset: {x: 0, y: -0.8, z: 0}
   thrown: 1
