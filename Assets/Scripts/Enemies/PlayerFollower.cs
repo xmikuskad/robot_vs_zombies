@@ -18,7 +18,7 @@ public abstract class PlayerFollower : MonoBehaviour
     protected Rigidbody2D rb;   // Needs to be protected because of inheritance
     protected Animator animator;   // Needs to be protected because of inheritance
     protected SpriteRenderer sr;   // Needs to be protected because of inheritance
-    private Transform player;
+    protected Transform player;
 
     [SerializeField]
     private LayerMask platformTriggerMask;
@@ -47,7 +47,7 @@ public abstract class PlayerFollower : MonoBehaviour
     private float jumpDownWait = 0.3f;
 
     [SerializeField]
-    private Vector2 attackRange = new Vector2(1f, 0.5f);
+    protected Vector2 attackRange = new Vector2(1f, 0.5f); // Needs to be protected because of inheritance
 
     [SerializeField]
     private float timeBetweenAttacks = 1f;

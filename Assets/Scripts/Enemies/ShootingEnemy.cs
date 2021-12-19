@@ -30,6 +30,7 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
     private LayerMask fallingLayerMask;
 
     private int ignoringPlatformCount;
+    private bool canShoot = false;
 
     private SpriteRenderer sr;
 
@@ -48,6 +49,7 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
     // Update is called once per frame
     void Update()
     {
+        if (!canShoot) return;
         if(timeBetweenAttacksCounter >=0f)
         {
             timeBetweenAttacksCounter -= Time.deltaTime;
@@ -115,6 +117,7 @@ public class ShootingEnemy : MonoBehaviour, IEnemy
             if(ignoringPlatformCount <=0)
             {
                 this.gameObject.layer = GetLayerNumber(defaultLayerMask);
+                canShoot = true;
             }
         }
     }

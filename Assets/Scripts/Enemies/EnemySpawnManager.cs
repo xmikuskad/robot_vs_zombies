@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+using DG.Tweening;
 
 public class EnemySpawnManager : MonoBehaviour
 {
@@ -60,13 +62,17 @@ public class EnemySpawnManager : MonoBehaviour
         {
             loadingWave = true; // Prevent from firing multiple times
             NextWave();
+            return;
         }
+
+        timerText.text = GetTimeFromSeconds(waveTimeLeft);
     }
 
     private void NextWave()
     {
         Debug.Log("Next wave");
         waveIndex++;
+
         if (waveIndex >= waveInfos.Count)
         {
             // TODO game win!
@@ -74,6 +80,7 @@ public class EnemySpawnManager : MonoBehaviour
             shouldSpawn = false;
             return;
         }
+        UpdateWaveText();
         Debug.Log("HIR?");
         actualWave = waveInfos[waveIndex];
         waveTimeLeft = actualWave.afterWaveTime;
@@ -83,7 +90,7 @@ public class EnemySpawnManager : MonoBehaviour
         spawnTimes.Clear();
         foreach (EnemyType enemy in waveEnemies)
         {
-            float waitTime = Random.Range(actualWave.minTimeBetweenSpawns, actualWave.maxTimeBetweenSpawns);
+            float waitTime = UnityEngine.Random.Range(actualWave.minTimeBetweenSpawns, actualWave.maxTimeBetweenSpawns);
             spawnTimes.Add(waitTime);
             waveTimeLeft += waitTime;
         }
@@ -158,14 +165,12 @@ public class EnemySpawnManager : MonoBehaviour
                 Debug.LogError("Enemy prefab not found!!");
                 return enemySpawner.transform.position;
             case EnemyType.Walking:
-                return enemySpawner.transform.position;
             case EnemyType.Armored:
-                return enemySpawner.transform.position;
             case EnemyType.Boss:
                 return enemySpawner.transform.position;
             case EnemyType.Ranged:
                 Vector2 startEndVector = GetMapStartAndEnd();
-                return new Vector2(Random.Range(startEndVector.x, startEndVector.y), mapHeight);
+                return new Vector2(UnityEngine.Random.Range(startEndVector.x, startEndVector.y), mapHeight);
         }
     }
 
@@ -190,5 +195,36 @@ public class EnemySpawnManager : MonoBehaviour
         }
 
         return startEndVector;
+    }
+
+    // Return time formatted as 00:00
+    private string GetTimeFromSeconds(float timeInSeconds)
+    {
+        int mins = (int)((timeInSeconds) / 60);
+        String minsString = mins.ToString();
+        if (minsString.Length <= 1)
+        {
+            minsString = "0" + minsString;
+        }
+        String seconds = string.Format("{0:F0}", Mathf.Min(59, timeInSeconds % 60));
+        if (seconds.Length <= 1)
+        {
+            seconds = "0" + seconds;
+        }
+        return minsString + ":" + seconds;
+    }
+
+    // Makes a nice effect when changing text
+    private void UpdateWaveText()
+    {
+        String newWaveText = (waveIndex + 1)==waveInfos.Count ? "Last wave!" : "Wave " + (waveIndex + 1) + "/" + waveInfos.Count;
+        if(waveIndex == 0)  // Do not animate first wave
+        {
+            waveText.text = newWaveText;
+            return;
+        }
+        DOTween.Sequence()
+            .PrependCallback(() => waveText.text = newWaveText)
+            .Insert(0, waveText.transform.DOPunchPosition(Vector3.up * 10, 1f, 4, 0.3f));
     }
 }
