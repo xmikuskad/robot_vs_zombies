@@ -13,14 +13,12 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
     [SerializeField]
     private AudioClip deathSound;
 
-    // Start is called before the first frame update
     new void Start()
     {
         base.Start();
 
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         FollowPlayer();
@@ -37,11 +35,6 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
             player.GetComponent<Player>().HitForDamage(damage);
             AudioManager.Instance.PlayClip(hitSound, 3f);
         }
-    }
-
-    public int GetDamage()
-    {
-        return damage;
     }
 
     public void TakeExplosionDamage(int damage)
@@ -61,6 +54,7 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
         AudioManager.Instance.PlayClip(deathSound,3f);
     }
 
+    // Called as animation event
     public void DestroyThis()
     {
         Destroy(this.gameObject);
@@ -68,6 +62,6 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
 
     public void OnSpawn(float mapHeight)
     {
-        // TODO
+        // nothing
     }
 }
