@@ -57,7 +57,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.06787872, y: -0.47515252}
+  m_Offset: {x: 0.00073361397, y: -0.44620666}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -68,7 +68,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.12888718, y: 0.10626072}
+  m_Size: {x: 1.0208478, y: 0.04836899}
   m_EdgeRadius: 0
 --- !u!1 &7980296869329059029
 GameObject:
@@ -144,7 +144,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -176,7 +176,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &7980296869329059031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,22 +189,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6369791e8d9923942bb9ee9a69e338f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 5
   platformCheckRange: 0.2
   isJumping: 0
   isFlying: 0
   platformTriggerMask:
     serializedVersion: 2
     m_Bits: 1024
-  triggerCheckRange: 10
+  triggerCheckRange: 20
   defaultMask:
     serializedVersion: 2
     m_Bits: 128
   jumpingLayerMask:
     serializedVersion: 2
     m_Bits: 2048
-  jumpPower: 1
-  jumpTime: 1
+  jumpPowerPerUnit: 0.2
+  jumpTimePerUnit: 0.1
+  minPlatformHeight: 4
+  chillAfterJump: 2
+  jumpDownWait: 1
+  attackRange: {x: 2, y: 1}
   health: 0
   damage: 0
   forcePower: 10

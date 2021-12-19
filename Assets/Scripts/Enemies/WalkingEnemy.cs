@@ -53,4 +53,9 @@ public class WalkingEnemy : PlayerFollower,IEnemy
     {
         Destroy(this.gameObject);
     }
+
+    public void OnSpawn(float mapHeight)
+    {
+        // TODO
+    }
 }

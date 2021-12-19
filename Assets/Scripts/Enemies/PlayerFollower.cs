@@ -11,13 +11,10 @@ public abstract class PlayerFollower : MonoBehaviour
     [SerializeField]
     private float platformCheckRange = 0.2f;
     [SerializeField]
-    private bool isJumping = false;
-    [SerializeField]
     private bool isFlying = false;
 
-    protected Rigidbody2D rb;
+    protected Rigidbody2D rb;   // Needs to be protected because of inheritance
     private Transform player;
-    private GroundChecker platformChecker;
 
     [SerializeField]
     private LayerMask platformTriggerMask;
@@ -38,8 +35,9 @@ public abstract class PlayerFollower : MonoBehaviour
     private float minPlatformHeight = 1.5f;
 
     [SerializeField]
-    private float chillAfterJump = 0.5f;
-    private float chillCounter = 0f;
+    private float waitAfterJump = 0.5f;
+    [SerializeField]
+    private float waitTimeCounter = 0f;
 
     [SerializeField]
     private float jumpDownWait = 0.3f;
@@ -55,18 +53,17 @@ public abstract class PlayerFollower : MonoBehaviour
 
     public void FollowPlayer()
     {
-        if (chillCounter > 0f)
+        if (waitTimeCounter >= 0f)
         {
-            chillCounter -= Time.deltaTime;
+            waitTimeCounter -= Time.deltaTime;
         }
         else
         {
-
-            if (isJumping || isFlying)
+            if (isFlying)
             {
                 return;
             }
-
+            // TODO make a delay for this?
             // Should we jump up/down ?
             if (Mathf.Abs(this.transform.position.y - player.transform.position.y) > minPlatformHeight)
             {
@@ -75,12 +72,12 @@ public abstract class PlayerFollower : MonoBehaviour
             }
         }
 
-        if (isJumping || isFlying)
+        if (isFlying)
         {
             return;
         }
 
-        // Can we attack ?
+        // Attack range check
         if (Mathf.Abs(player.position.x - this.transform.position.x) < attackRange.x &&
             Mathf.Abs(player.position.y - this.transform.position.y) < attackRange.y)
         {
@@ -104,49 +101,50 @@ public abstract class PlayerFollower : MonoBehaviour
     public bool TryToJump(bool canJumpDown)
     {
         // Do not jump if in air or on cooldown
-        if (isFlying || isJumping || chillCounter > 0f)
+        if (isFlying || waitTimeCounter > 0f)
         {
             return false;
-        }  
-        isJumping = true;    // To prevent this function from going off multiple times
+        }
+        waitTimeCounter = 1f;    // To prevent this function from going off multiple times
         bool shouldBeLower = this.gameObject.transform.position.y - player.transform.position.y > 0;
         bool shouldBeRight = this.gameObject.transform.position.x - player.transform.position.x > 0;
 
+        // Check if player is under us. If he is then jump down
         if (canJumpDown && shouldBeLower)
         {
             StartCoroutine(JumpDown());
             return false;
         }
 
+        // Get all platforms in range
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, triggerCheckRange, platformTriggerMask);
         if (colliders.Length == 0)
         {
             Debug.LogWarning("Couldnt find position to jump to");
-            chillCounter = chillAfterJump * 2;  // Allow him to move
-            isJumping = false;
+            waitTimeCounter = waitAfterJump*2;  // Allow him to move to other position
             return false;
         }
 
         // Try to find perfect positions
         foreach (Collider2D collider in colliders)
         {
+            float widthDistance = this.gameObject.transform.position.x - collider.gameObject.transform.position.x;  // Used to prevent "jumping" on the same place
             bool isLower = this.gameObject.transform.position.y - collider.gameObject.transform.position.y > 0;
-            bool isRight = this.gameObject.transform.position.x - collider.gameObject.transform.position.x > 0;
-            if (isLower == shouldBeLower && isRight == shouldBeRight)    // Perfect situation
+            bool isRight = widthDistance > 0;
+            if (Mathf.Abs(widthDistance)>1f && isLower == shouldBeLower && isRight == shouldBeRight)    // Perfect situation
             {
                 // Calculate random pos for jump
-                if (collider.TryGetComponent<BoxCollider2D>(out BoxCollider2D boxCol)) {
+                SpriteRenderer parentRenderer = collider.gameObject.GetComponentInParent<SpriteRenderer>(); // Fix around GetComponentInParent<Transform>() returning same Transform
+                if (parentRenderer != null) {
                     Vector3 destPos = collider.transform.position;
-                    float halfSize = (boxCol.size.x / 2f) - 0.2f;
+                    float halfSize = (parentRenderer.transform.localScale.x / 2f) - 1f;
                     destPos.x = destPos.x + Random.Range(-halfSize, halfSize);
                     MakeJump(destPos);
                     return true;
                 }
             }
         }
-        Debug.LogWarning("Nothing??");
-        isJumping = false;
-
+        Debug.LogWarning("No position to jump found!?");
         return false;
     }
 
@@ -163,8 +161,7 @@ public abstract class PlayerFollower : MonoBehaviour
 
     private IEnumerator JumpDown()
     {
-        chillCounter = chillAfterJump+jumpDownWait;
-        isJumping = false;
+        waitTimeCounter = waitAfterJump+jumpDownWait;
         this.gameObject.layer = GetLayerNumber(jumpingLayerMask);
         yield return new WaitForSeconds(jumpDownWait);
         this.gameObject.layer = GetLayerNumber(defaultMask);
@@ -178,15 +175,14 @@ public abstract class PlayerFollower : MonoBehaviour
         DOTween.Sequence()
             .PrependCallback(() =>
             {
+                waitTimeCounter += jumpTimePerUnit * distance;
                 this.gameObject.layer = GetLayerNumber(jumpingLayerMask);
             })
             .Insert(0, rb.DOJump(position, jumpPowerPerUnit*distance, 1, jumpTimePerUnit * distance))
-            //.AppendInterval((jumpTimePerUnit * distance) / 3)
             .AppendCallback(() =>
             {
                 this.gameObject.layer = GetLayerNumber(defaultMask);
-                isJumping = false;
-                chillCounter = chillAfterJump;
+                waitTimeCounter = waitAfterJump;
             });
     }
 }

@@ -35,4 +35,9 @@ public class ArmoredEnemy : PlayerFollower, IEnemy
     {
         Destroy(this.gameObject);
     }
+
+    public void OnSpawn(float mapHeight)
+    {
+        // TODO
+    }
 }
