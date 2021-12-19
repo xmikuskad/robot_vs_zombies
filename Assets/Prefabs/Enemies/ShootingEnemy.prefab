@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d153c582c0e97ee4397c3f83f64dceea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 2
   damage: 1
-  range: 15
+  range: 8
   speed: 8
   timeBetweenAttacks: 3
   timeBetweenAttacksCounter: 0
