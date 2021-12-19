@@ -18,5 +18,12 @@ public class EnemyDestroyer : MonoBehaviour
         {
             Destroy(col.gameObject);
         }
+        
+        if(col.gameObject.tag.Equals(Constants.PlayerTag))
+        {
+            col.gameObject.GetComponent<Player>().HitForDamage(1);
+            col.gameObject.GetComponent<Player>().HitForDamage(1);
+            col.gameObject.GetComponent<Player>().HitForDamage(1);
+        }
     }
 }

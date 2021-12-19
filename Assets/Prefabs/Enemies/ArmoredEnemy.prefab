@@ -85,7 +85,7 @@ MonoBehaviour:
   jumpPowerPerUnit: 0.2
   jumpTimePerUnit: 0.1
   minPlatformHeight: 4
-  waitAfterJump: 0.5
+  waitAfterJump: 3
   waitTimeCounter: 0
   jumpDownWait: 1
   attackRange: {x: 2, y: 1}

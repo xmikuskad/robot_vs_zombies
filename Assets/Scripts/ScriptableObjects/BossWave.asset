@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34e9225df2ad83840aa909d1f48f3d93, type: 3}
-  m_Name: ExampleWave
+  m_Name: BossWave
   m_EditorClassIdentifier: 
-  enemies: 020000000000000001000000000000000100000000000000
-  minTimeBetweenSpawns: 2
+  enemies: 0000000000000000000000000000000003000000
+  minTimeBetweenSpawns: 1
   maxTimeBetweenSpawns: 4
   afterWaveTime: 10

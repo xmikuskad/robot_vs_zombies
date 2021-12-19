@@ -14,6 +14,8 @@ public class GroundChecker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (playerFollower == null) return;
+        
         if (collision.tag.Equals(Constants.PlatformTag))
         {
             playerFollower.SetIsFlying(false);
@@ -27,6 +29,8 @@ public class GroundChecker : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (playerFollower == null) return;
+        
         if (collision.tag.Equals(Constants.PlatformTag))
         {
             playerFollower.SetIsFlying(false);
@@ -40,6 +44,8 @@ public class GroundChecker : MonoBehaviour
     // TODO probably bug somewhere here because sometimes enemy is stuck
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (playerFollower == null) return;
+        
         if (collision.tag.Equals(Constants.PlatformTag))
         {
             playerFollower.SetIsFlying(true);
