@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class EnemySpawnManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class EnemySpawnManager : MonoBehaviour
 
     [SerializeField]
     private float mapHeight;
+    [SerializeField]
+    private GameObject bossSpawnPosition;
 
     [Header("Object references")]
     [SerializeField]
@@ -21,6 +24,8 @@ public class EnemySpawnManager : MonoBehaviour
     private TMP_Text waveText;
     [SerializeField]
     private TMP_Text timerText;
+    [SerializeField]
+    private Slider bossHp;
 
     [Header("Enemy prefabs")]
     [SerializeField]
@@ -44,6 +49,8 @@ public class EnemySpawnManager : MonoBehaviour
 
     private bool loadingWave = false;
 
+    private BossEnemy boss;
+
     [Header("Sounds")]
     [SerializeField]
     private AudioClip winSound;
@@ -52,6 +59,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         waveIndex = -1;
         waveTimeLeft = 200f;
+        loadingWave = true;
         NextWave();
         shouldSpawn = true;
         StartCoroutine(EnemySpawner());
@@ -59,6 +67,11 @@ public class EnemySpawnManager : MonoBehaviour
 
     void Update()
     {
+        if(boss != null)
+        {
+            bossHp.value = boss.GetHealthRatio();
+        }
+
         if (!shouldSpawn || loadingWave) return;
 
         waveTimeLeft -= Time.deltaTime;
@@ -79,14 +92,14 @@ public class EnemySpawnManager : MonoBehaviour
 
         if (waveIndex >= waveInfos.Count)
         {
-            // TODO game win!
-            Debug.Log("GG!");
+            // TODO game win! - game win should be after defeating boss right?
+            timerText.gameObject.SetActive(false);
+            /*Debug.Log("GG!");
             shouldSpawn = false;
-            AudioManager.Instance.PlayClip(winSound, 1f);
+            AudioManager.Instance.PlayClip(winSound, 1f);*/
             return;
         }
         UpdateWaveText();
-        Debug.Log("HIR?");
         actualWave = waveInfos[waveIndex];
         waveTimeLeft = actualWave.afterWaveTime;
         waveEnemies = actualWave.enemies;
@@ -95,10 +108,12 @@ public class EnemySpawnManager : MonoBehaviour
         spawnTimes.Clear();
         foreach (EnemyType enemy in waveEnemies)
         {
+            Debug.Log(enemy);
             float waitTime = UnityEngine.Random.Range(actualWave.minTimeBetweenSpawns, actualWave.maxTimeBetweenSpawns);
             spawnTimes.Add(waitTime);
             waveTimeLeft += waitTime;
         }
+        waveEnemyIndex = 0;
         loadingWave = false;
     }
 
@@ -106,7 +121,7 @@ public class EnemySpawnManager : MonoBehaviour
     {
         while (shouldSpawn)
         {
-            if (!loadingWave && waveEnemyIndex < waveEnemies.Count)
+            if (waveEnemies != null && waveEnemyIndex < waveEnemies.Count)
             {
                 Debug.Log("Spawning " + (waveEnemyIndex + 1) + "/" + waveEnemies.Count);
                 CallSpawnEnemy(waveEnemies[waveEnemyIndex]);
@@ -117,7 +132,7 @@ public class EnemySpawnManager : MonoBehaviour
             else
             {
                 // Wait while new wave loads
-                yield return new WaitForSeconds(waveTimeLeft > 2f ? waveTimeLeft : 0.5f);
+                yield return new WaitForSeconds(0.1f);
             }
         }
     }
@@ -130,13 +145,13 @@ public class EnemySpawnManager : MonoBehaviour
         {
             if (!IsSpawnerVisibleToCamera(enemySpawner.transform.position, planes))
             {
-                SpawnEnemy(GetEnemyPrefab(enemyType), GetSpawnPosition(enemyType, enemySpawner));
+                SpawnEnemy(enemyType, GetSpawnPosition(enemyType, enemySpawner));
                 return;
             }
         }
 
         Debug.LogError("Are both places in camera view?");
-        SpawnEnemy(GetEnemyPrefab(enemyType), GetSpawnPosition(enemyType, enemySpawners[0]));
+        SpawnEnemy(enemyType, GetSpawnPosition(enemyType, enemySpawners[0]));
     }
 
     private bool IsSpawnerVisibleToCamera(Vector3 centerPos, Plane[] planes)
@@ -171,20 +186,27 @@ public class EnemySpawnManager : MonoBehaviour
                 return enemySpawner.transform.position;
             case EnemyType.Walking:
             case EnemyType.Armored:
-            case EnemyType.Boss:
                 return enemySpawner.transform.position;
+            case EnemyType.Boss:
+                return bossSpawnPosition.transform.position;
             case EnemyType.Ranged:
                 Vector2 startEndVector = GetMapStartAndEnd();
                 return new Vector2(UnityEngine.Random.Range(startEndVector.x, startEndVector.y), mapHeight);
         }
     }
 
-    public void SpawnEnemy(GameObject spawnObj, Vector3 position)
+    public void SpawnEnemy(EnemyType enemyType, Vector3 position)
     {
+        GameObject spawnObj = GetEnemyPrefab(enemyType);
         GameObject spawnedEnemy = Instantiate(spawnObj, position, Quaternion.identity);
         if (spawnedEnemy.TryGetComponent<IEnemy>(out var enemy))
         {
             enemy.OnSpawn(mapHeight);
+        }
+        if (spawnedEnemy.TryGetComponent<BossEnemy>(out var bossEnemy))
+        {
+            boss = bossEnemy;
+            bossHp.gameObject.SetActive(true);
         }
     }
 
@@ -205,7 +227,7 @@ public class EnemySpawnManager : MonoBehaviour
     // Return time formatted as 00:00
     private string GetTimeFromSeconds(float timeInSeconds)
     {
-        int mins = (int)((timeInSeconds) / 60);
+        int mins = (int)((Mathf.Max(0,timeInSeconds)) / 60);
         String minsString = mins.ToString();
         if (minsString.Length <= 1)
         {

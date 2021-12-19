@@ -23,16 +23,12 @@ public class Dynamite : MonoBehaviour
 
     [FormerlySerializedAs("speed")] public float initialThrowForce = 4f;
 
-    public Vector3 launchOffset;
-
     public bool thrown = false;
     
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-       
-        transform.Translate(launchOffset);
         
         countdown = delay;
 
@@ -46,6 +42,11 @@ public class Dynamite : MonoBehaviour
         {
             Explode();
         }
+    }
+
+    public void SetCountdown(float value)
+    {
+        countdown = value;
     }
 
     private void OnDrawGizmosSelected()

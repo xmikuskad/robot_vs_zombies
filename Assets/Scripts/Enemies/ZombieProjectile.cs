@@ -33,6 +33,7 @@ public class ZombieProjectile : MonoBehaviour
         if (collision.tag.Equals(Constants.PlayerTag))
         {
             // TODO deal damage
+            Debug.Log("Hit player!");
             AudioManager.Instance.PlayClip(hitSound, 3f);
             MakeSplash();
         }
