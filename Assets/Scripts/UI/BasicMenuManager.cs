@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 
 // Dotween animations copied from https://github.com/Noixelfer/MemoryGame/blob/master/Assets/Scripts/UIMainMenu.cs
-public class MainMenu : MonoBehaviour
+public class BasicMenuManager : MonoBehaviour
 {
     [SerializeField]
     private List<Button> buttons;
@@ -62,6 +62,10 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(Constants.SettingsScene);
     }
 
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene(Constants.TutorialScene);
+    }
 
     public void LoadLevel(int level)
     {

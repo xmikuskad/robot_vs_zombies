@@ -7,6 +7,7 @@ public static class Constants
     // Scene constants
     public const string MainScene = "MainScene";
     public const string SettingsScene = "SettingsScene";
+    public const string TutorialScene = "TutorialScene";
     public const string Level = "Level";
 
     // Tags

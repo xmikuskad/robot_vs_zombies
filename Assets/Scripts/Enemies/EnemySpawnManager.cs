@@ -92,12 +92,11 @@ public class EnemySpawnManager : MonoBehaviour
 
         if (waveIndex >= waveInfos.Count)
         {
-            // TODO game win! - game win should be after defeating boss right?
-            timerText.gameObject.SetActive(false);
-            /*Debug.Log("GG!");
-            shouldSpawn = false;
-            AudioManager.Instance.PlayClip(winSound, 1f);*/
             return;
+        }
+        if (waveIndex >= waveInfos.Count)
+        {
+            timerText.gameObject.SetActive(false);
         }
         UpdateWaveText();
         actualWave = waveInfos[waveIndex];
