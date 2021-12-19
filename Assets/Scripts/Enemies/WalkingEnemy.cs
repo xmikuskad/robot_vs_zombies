@@ -21,11 +21,7 @@ public class WalkingEnemy : PlayerFollower,IEnemy
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            SetIsFlying(true);
-            rb.AddForce(new Vector2(1, 1) * forcePower, ForceMode2D.Impulse);
-        }
+
     }
 
     // Update is called once per frame

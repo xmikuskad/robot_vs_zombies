@@ -17,4 +17,10 @@ public static class Constants
 
     // Player prefs
     public const string AudioVolume = "AudioVolume";
+
+    // Animation strings
+    public const string AnimRunning = "running";
+    public const string AnimAttack = "attack";
+    public const string AnimDeath = "death";
+    public const string AnimMakeSplash = "splash";
 }

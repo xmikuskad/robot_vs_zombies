@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class PlayerFollower : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public abstract class PlayerFollower : MonoBehaviour
     private bool isFlying = false;
 
     protected Rigidbody2D rb;   // Needs to be protected because of inheritance
+    protected Animator animator;   // Needs to be protected because of inheritance
+    protected SpriteRenderer sr;   // Needs to be protected because of inheritance
     private Transform player;
 
     [SerializeField]
@@ -45,14 +49,25 @@ public abstract class PlayerFollower : MonoBehaviour
     [SerializeField]
     private Vector2 attackRange = new Vector2(1f, 0.5f);
 
+    [SerializeField]
+    private float timeBetweenAttacks = 1f;
+    private float timeBetweenAttacksCounter = 0f;
+
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag(Constants.PlayerTag).transform;
     }
 
     public void FollowPlayer()
     {
+        if(timeBetweenAttacksCounter >= 0f)
+        {
+            timeBetweenAttacksCounter -= Time.deltaTime;
+        }
+
         if (waitTimeCounter >= 0f)
         {
             waitTimeCounter -= Time.deltaTime;
@@ -61,6 +76,7 @@ public abstract class PlayerFollower : MonoBehaviour
         {
             if (isFlying)
             {
+                animator.SetBool(Constants.AnimRunning, false);
                 return;
             }
             // TODO make a delay for this?
@@ -74,14 +90,18 @@ public abstract class PlayerFollower : MonoBehaviour
 
         if (isFlying)
         {
+            animator.SetBool(Constants.AnimRunning, false);
             return;
         }
 
         // Attack range check
         if (Mathf.Abs(player.position.x - this.transform.position.x) < attackRange.x &&
-            Mathf.Abs(player.position.y - this.transform.position.y) < attackRange.y)
+            Mathf.Abs(player.position.y - this.transform.position.y) < attackRange.y && 
+            timeBetweenAttacksCounter < 0f)
         {
             // TODO ATTACK
+            animator.SetTrigger(Constants.AnimAttack);
+            timeBetweenAttacksCounter = timeBetweenAttacks;
             return;
         }
 
@@ -91,6 +111,10 @@ public abstract class PlayerFollower : MonoBehaviour
         playerPos.y = transform.position.y;
         Vector3 dir = (playerPos - transform.position).normalized;
         rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
+
+        // Process animation and sprite changes
+        animator.SetBool(Constants.AnimRunning, true);
+        sr.flipX = dir.x < 0f;
     }
 
     public void SetIsFlying(bool value)
@@ -171,6 +195,7 @@ public abstract class PlayerFollower : MonoBehaviour
     private void MakeJump(Vector3 position)
     {
         float distance = Vector2.Distance(this.gameObject.transform.position, position);
+        position.y += 0.5f; // Move to the top of the boxCollider
         // Make the jump
         DOTween.Sequence()
             .PrependCallback(() =>
