@@ -31,17 +31,7 @@ public class Dynamite : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if (thrown)
-        {
-            var mousePosition = Input.mousePosition;
-            mousePosition.z = 10.0f;
-            if (Camera.main != null) mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            var mouseDirection = mousePosition - gameObject.transform.position;
-            mouseDirection.z = 0.0f;
-            rb.AddForce(mouseDirection * initialThrowForce, ForceMode2D.Impulse);
-            var impulse = ( Random.Range(-180f, 180f) * Mathf.Deg2Rad) * rb.inertia;
-            rb.AddTorque(impulse * initialThrowForce, ForceMode2D.Impulse);
-        }
+       
         transform.Translate(launchOffset);
         
         countdown = delay;

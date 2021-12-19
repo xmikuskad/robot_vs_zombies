@@ -130,6 +130,7 @@ MonoBehaviour:
   dynamiteMagazineRechargeTimer: 0
   maxVisualDynamites: 3
   visualDynamite: {fileID: 2937559990438876019, guid: 9ce7626d86ddf8942938dc796c9d8646, type: 3}
+  dynamiteThrowOriginOffset: {x: 0, y: -0.8, z: 0}
   deltaDetonationTime: 0
   minDeltaDetonationTime: 0.15
 --- !u!61 &5349622003449932434
