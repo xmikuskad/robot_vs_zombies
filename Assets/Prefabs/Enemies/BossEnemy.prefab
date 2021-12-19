@@ -162,6 +162,7 @@ MonoBehaviour:
   dynamiteSpawnPoint: {fileID: 1318205287}
   hitSound: {fileID: 0}
   deathSound: {fileID: 0}
+  startDelay: 3
 --- !u!50 &248180936
 Rigidbody2D:
   serializedVersion: 4

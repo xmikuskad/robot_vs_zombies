@@ -107,6 +107,7 @@ public class BossEnemy : MonoBehaviour, IEnemy
         dynamiteRb.AddTorque(impulse * throwForce, ForceMode2D.Impulse);
 
         if (projectile.TryGetComponent<Dynamite>(out var dynamite)) {
+            dynamite.SetIsEvil(true);
             dynamite.SetCountdown(countdown);
         }
 
